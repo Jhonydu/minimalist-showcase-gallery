@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import ProjectGallery from '@/components/ProjectGallery';
 import ProjectModal from '@/components/ProjectModal';
@@ -14,6 +15,24 @@ const Index = () => {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   const [pricingModalOpen, setPricingModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Handle state from navigation
+  useEffect(() => {
+    if (location.state) {
+      if (location.state.openPricing) {
+        setPricingModalOpen(true);
+        // Clear the state
+        navigate('/', { replace: true });
+      } else if (location.state.openContact) {
+        setContactModalOpen(true);
+        // Clear the state
+        navigate('/', { replace: true });
+      }
+    }
+  }, [location, navigate]);
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);

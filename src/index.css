@@ -81,6 +81,20 @@
   .project-item {
     @apply transition-all duration-300;
   }
+  
+  /* Viewer container for 3D models */
+  .viewer-container {
+    background-color: #e5e5e5;
+    height: 100%;
+    border-radius: 1rem 0 0 1rem;
+    overflow: hidden;
+  }
+  
+  @media (max-width: 768px) {
+    .viewer-container {
+      border-radius: 1rem 1rem 0 0;
+    }
+  }
 }
 
 @layer components {
