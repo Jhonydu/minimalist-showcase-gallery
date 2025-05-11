@@ -31,7 +31,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
               {/* Visualizador 3D - iframe do Sketchfab */}
               <iframe
                 title="3D Model Viewer"
-                src={project.modelUrl}
+                src={`${project.modelUrl}?autostart=1&ui_controls=0&ui_infos=0`}
                 className="w-full h-full"
                 allow="autoplay; fullscreen; xr-spatial-tracking"
                 frameBorder="0"

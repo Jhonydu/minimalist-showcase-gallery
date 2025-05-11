@@ -7,9 +7,7 @@ export const projectsData: Project[] = [
     id: "1",
     title: "Casa Moderna",
     thumbnail: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070",
-    // EXEMPLO: Link do Sketchfab - substitua pelo seu modelo
-    modelUrl: "https://sketchfab.com/models/e916764c1d8e46169cacb4068283a50e/embed",
-    // EXEMPLO: HTML embutido - substitua pelo seu conteúdo
+    modelUrl: "https://sketchfab.com/models/e916764c1d8e46169cacb4068283a50e/embed?autospin=1&autostart=1&ui_theme=dark",
     htmlContent: `
       <div class="p-4 bg-gray-50 rounded-md">
         <h4 class="font-medium mb-2">Especificações</h4>
@@ -29,9 +27,7 @@ export const projectsData: Project[] = [
     id: "2",
     title: "Loft Corporativo",
     thumbnail: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2069",
-    // EXEMPLO: Link do Sketchfab - substitua pelo seu modelo
-    modelUrl: "https://sketchfab.com/models/91894c41353c455dac6bbc02c04d91f4/embed",
-    // EXEMPLO: HTML embutido - substitua pelo seu conteúdo
+    modelUrl: "https://sketchfab.com/models/91894c41353c455dac6bbc02c04d91f4/embed?autospin=1&autostart=1&ui_theme=dark",
     htmlContent: `
       <div class="p-4 bg-gray-50 rounded-md">
         <h4 class="font-medium mb-2">Especificações</h4>
@@ -51,9 +47,7 @@ export const projectsData: Project[] = [
     id: "3",
     title: "Prótese sobre implante – 12 a 22",
     thumbnail: "https://images.unsplash.com/photo-1595526051245-4506e0005bd0?q=80&w=2070",
-    // EXEMPLO: Link do Sketchfab - substitua pelo seu modelo
-    modelUrl: "https://sketchfab.com/models/a1e2051330554a88a1855a1fc5be4243/embed",
-    // EXEMPLO: HTML embutido - substitua pelo seu conteúdo
+    modelUrl: "https://sketchfab.com/models/a1e2051330554a88a1855a1fc5be4243/embed?autospin=1&autostart=1&ui_theme=dark",
     htmlContent: `
       <div class="p-4 bg-gray-50 rounded-md">
         <h4 class="font-medium mb-2">Especificações</h4>
@@ -73,9 +67,7 @@ export const projectsData: Project[] = [
     id: "4",
     title: "Lentes de Contato Dental",
     thumbnail: "https://images.unsplash.com/photo-1453614512568-c4024d13c247?q=80&w=1932",
-    // EXEMPLO: Link do Sketchfab - substitua pelo seu modelo
-    modelUrl: "https://sketchfab.com/models/011525c2b4624466b06e22b698a0102f/embed",
-    // EXEMPLO: HTML embutido - substitua pelo seu conteúdo
+    modelUrl: "https://sketchfab.com/models/011525c2b4624466b06e22b698a0102f/embed?autospin=1&autostart=1&ui_theme=dark",
     htmlContent: `
       <div class="p-4 bg-gray-50 rounded-md">
         <h4 class="font-medium mb-2">Especificações</h4>
@@ -95,9 +87,7 @@ export const projectsData: Project[] = [
     id: "5",
     title: "Protocolo Sobre Implante",
     thumbnail: "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?q=80&w=2067",
-    // EXEMPLO: Link do Sketchfab - substitua pelo seu modelo
-    modelUrl: "https://sketchfab.com/models/e9f348dab51743caa3eb5db48e2e7c91/embed",
-    // EXEMPLO: HTML embutido - substitua pelo seu conteúdo
+    modelUrl: "https://sketchfab.com/models/e9f348dab51743caa3eb5db48e2e7c91/embed?autospin=1&autostart=1&ui_theme=dark",
     htmlContent: `
       <div class="p-4 bg-gray-50 rounded-md">
         <h4 class="font-medium mb-2">Especificações</h4>
@@ -117,9 +107,7 @@ export const projectsData: Project[] = [
     id: "6",
     title: "Unitário Posterior",
     thumbnail: "https://images.unsplash.com/photo-1584740231956-699de7b54283?q=80&w=2070",
-    // EXEMPLO: Link do Sketchfab - substitua pelo seu modelo
-    modelUrl: "https://sketchfab.com/models/a56f727cf9084971897b774d3b2d16a0/embed",
-    // EXEMPLO: HTML embutido - substitua pelo seu conteúdo
+    modelUrl: "https://sketchfab.com/models/3d7ae759231941f182bdf73add09292e/embed?autospin=1&autostart=1&ui_theme=dark",
     htmlContent: `
       <div class="p-4 bg-gray-50 rounded-md">
         <h4 class="font-medium mb-2">Especificações</h4>
