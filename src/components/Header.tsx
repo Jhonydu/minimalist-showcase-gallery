@@ -18,7 +18,7 @@ const Header = ({ openPricing, openContact, className, currentPage }: HeaderProp
   return (
     <header className={cn(
       "w-full py-6 px-6 flex justify-between items-center fixed top-0 left-0 right-0 z-10",
-      "bg-background/80 backdrop-blur-md border-b",
+      "bg-background/80 backdrop-blur-md", // Removed border-b
       className
     )}>
       <div 

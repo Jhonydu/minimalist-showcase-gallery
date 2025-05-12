@@ -36,7 +36,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
               {/* Enhanced 3D model viewer with better integration */}
               <iframe
                 title={`3D Model - ${project.title}`}
-                src={`${project.modelUrl}?autostart=1&ui_controls=0&ui_infos=0&transparent=1`}
+                src={`${project.modelUrl}?autostart=1&ui_controls=1&ui_infos=0&transparent=1`}
                 className="w-full h-full absolute inset-0 scale-105"
                 allow="autoplay; fullscreen; xr-spatial-tracking"
                 frameBorder="0"
@@ -47,15 +47,6 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
               <div className="p-6 border-t">
                 <div className="flex justify-between items-center mb-4">
                   <h4 className="text-sm font-medium">Visualização interativa do projeto</h4>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="flex items-center gap-1"
-                    onClick={() => window.open(`/projetos/${project.id}`, '_blank')}
-                  >
-                    <ExternalLink className="h-3.5 w-3.5" />
-                    <span>Ver em tela cheia</span>
-                  </Button>
                 </div>
                 
                 <Card className="border overflow-hidden">

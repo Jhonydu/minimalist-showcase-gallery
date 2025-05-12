@@ -45,6 +45,11 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Purple gradient colors */
+    --purple-primary: 259 81% 74%;
+    --purple-secondary: 267 57% 54%;
+    --purple-dark: 276 27% 14%;
   }
 
   * {
@@ -117,6 +122,11 @@
     height: 100%;
     transform: scale(1.1);
     border: none;
+  }
+
+  /* Purple gradient background */
+  .purple-gradient {
+    background: linear-gradient(135deg, hsl(var(--purple-primary)) 0%, hsl(var(--purple-dark)) 100%);
   }
   
   @media (max-width: 768px) {
