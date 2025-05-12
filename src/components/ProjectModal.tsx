@@ -18,60 +18,72 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0 bg-white">
+      <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0 bg-gradient-to-br from-[#9b87f5]/90 to-black/95 border-none">
         <VisuallyHidden>
           <DialogTitle>{project.title}</DialogTitle>
         </VisuallyHidden>
         
-        <button 
-          className="absolute right-4 top-4 z-10 bg-white/80 p-2 rounded-full"
-          onClick={onClose}
-        >
-          <X className="h-4 w-4" />
-        </button>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-          <div className="md:col-span-2 h-full">
-            <div className="w-full aspect-video relative overflow-hidden">
-              {/* Enhanced 3D model viewer with better integration */}
-              <iframe
-                title={`3D Model - ${project.title}`}
-                src={`${project.modelUrl}?autostart=1&ui_controls=1&ui_infos=0&transparent=1`}
-                className="w-full h-full absolute inset-0 scale-105"
-                allow="autoplay; fullscreen; xr-spatial-tracking"
-                frameBorder="0"
-              ></iframe>
+        <div className="p-6">
+          <button 
+            className="absolute right-4 top-4 text-white/70 hover:text-white transition-colors"
+            onClick={onClose}
+          >
+            <X className="h-4 w-4" />
+          </button>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="md:col-span-2 h-full">
+              <div className="w-full aspect-video relative overflow-hidden rounded-lg">
+                {/* Enhanced 3D model viewer with better integration */}
+                <iframe
+                  title={`3D Model - ${project.title}`}
+                  src={`${project.modelUrl}?autostart=1&ui_controls=1&ui_infos=0&ui_theme=dark`}
+                  className="w-full h-full absolute inset-0 scale-105"
+                  allow="autoplay; fullscreen; xr-spatial-tracking"
+                  frameBorder="0"
+                ></iframe>
+              </div>
+              
+              {project.htmlContent && (
+                <div className="mt-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h4 className="text-sm font-medium text-white">Visualização interativa do projeto</h4>
+                  </div>
+                  
+                  <Card className="border-0 overflow-hidden bg-white/10 backdrop-blur-sm">
+                    <CardContent className="p-0">
+                      <div 
+                        className="w-full h-[300px] overflow-auto bg-white rounded-md"
+                        dangerouslySetInnerHTML={{ __html: project.htmlContent }}
+                      ></div>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
             </div>
             
-            {project.htmlContent && (
-              <div className="p-6 border-t">
-                <div className="flex justify-between items-center mb-4">
-                  <h4 className="text-sm font-medium">Visualização interativa do projeto</h4>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+              <h3 className="text-xl font-medium text-white mb-4">{project.title}</h3>
+              <div className="text-sm text-white/70 mb-4">{project.type}</div>
+              <p className="text-sm text-white/90">{project.description}</p>
+              
+              <div className="mt-8 pt-8 border-t border-white/10">
+                <h4 className="text-sm font-medium text-white mb-2">Tecnologias utilizadas</h4>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-white/20 text-xs rounded-full text-white">Exocad</span>
+                  <span className="px-2 py-1 bg-white/20 text-xs rounded-full text-white">3D Print</span>
+                  <span className="px-2 py-1 bg-white/20 text-xs rounded-full text-white">Zircônia</span>
                 </div>
-                
-                <Card className="border overflow-hidden">
-                  <CardContent className="p-0">
-                    <div 
-                      className="w-full h-[300px] overflow-auto"
-                      dangerouslySetInnerHTML={{ __html: project.htmlContent }}
-                    ></div>
-                  </CardContent>
-                </Card>
               </div>
-            )}
-          </div>
-          
-          <div className="p-6 border-l border-t md:border-t-0">
-            <h3 className="text-xl font-medium mb-4">{project.title}</h3>
-            <div className="text-sm text-muted-foreground mb-4">{project.type}</div>
-            <p className="text-sm">{project.description}</p>
-            
-            <div className="mt-8 pt-8 border-t">
-              <h4 className="text-sm font-medium mb-2">Tecnologias utilizadas</h4>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-secondary text-xs rounded-full">Exocad</span>
-                <span className="px-2 py-1 bg-secondary text-xs rounded-full">3D Print</span>
-                <span className="px-2 py-1 bg-secondary text-xs rounded-full">Zircônia</span>
+              
+              <div className="mt-8 pt-4 text-right">
+                <Button
+                  variant="outline"
+                  onClick={onClose}
+                  className="bg-white/20 hover:bg-white/30 text-white border-white/20"
+                >
+                  Fechar
+                </Button>
               </div>
             </div>
           </div>
