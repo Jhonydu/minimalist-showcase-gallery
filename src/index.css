@@ -52,8 +52,47 @@
     --purple-dark: 276 27% 14%;
   }
 
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+
+    --sidebar-background: 240 10% 3.9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 240 5.9% 10%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 240 4.9% 83.9%;
+  }
+
   * {
-    @apply border-border;
+    @apply border-border selection:bg-primary/10 selection:text-primary;
   }
 
   body {
@@ -72,8 +111,7 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground));
-    border-radius: 10px;
+    @apply bg-muted-foreground/50 rounded-full;
   }
   
   /* Custom classes */
@@ -89,49 +127,51 @@
   
   /* Viewer container for 3D models - Enhanced for immersive display */
   .viewer-container {
-    background-color: #e5e5e5;
-    height: 100%;
-    border-radius: 1rem 0 0 1rem;
-    overflow: hidden;
-    position: relative;
+    @apply bg-[#e5e5e5] dark:bg-[#1a1a1a] h-full rounded-l-2xl overflow-hidden relative;
   }
   
   .viewer-container iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    transform: scale(1.05); /* Slightly scale up the iframe to remove any potential borders */
-    background-color: transparent;
+    @apply absolute inset-0 w-full h-full scale-105 bg-transparent;
   }
 
   /* Full screen 3D viewer for cases page */
   .fullscreen-viewer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
+    @apply fixed inset-0 w-screen h-screen z-0;
   }
   
   .fullscreen-viewer iframe {
-    width: 100%;
-    height: 100%;
-    transform: scale(1.1);
-    border: none;
+    @apply w-full h-full scale-110 border-none;
   }
 
   /* Purple gradient background */
   .purple-gradient {
-    background: linear-gradient(135deg, hsl(var(--purple-primary)) 0%, hsl(var(--purple-dark)) 100%);
+    @apply bg-gradient-to-br from-[hsl(var(--purple-primary))] to-[hsl(var(--purple-dark))];
+  }
+  
+  /* Styled HTML content for case details */
+  .styled-html-content {
+    @apply text-base leading-relaxed;
+  }
+  
+  .styled-html-content h1 {
+    @apply text-2xl font-semibold mb-4;
+  }
+  
+  .styled-html-content h2 {
+    @apply text-xl font-semibold mb-3;
+  }
+  
+  .styled-html-content p {
+    @apply mb-4;
+  }
+  
+  .styled-html-content img {
+    @apply rounded-lg my-4 max-w-full h-auto;
   }
   
   @media (max-width: 768px) {
     .viewer-container {
-      border-radius: 1rem 1rem 0 0;
+      @apply rounded-t-2xl rounded-b-none;
     }
   }
   
@@ -140,7 +180,24 @@
     animation: fadeIn 0.6s ease-in-out;
   }
   
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-in-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out;
+  }
+  
   @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeUp {
     from {
       opacity: 0;
       transform: translateY(10px);
@@ -149,6 +206,26 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Glass morphism utilities */
+  .glass {
+    @apply bg-white/70 dark:bg-black/70 backdrop-blur-md border border-white/20 dark:border-white/10;
+  }
+  
+  .glass-card {
+    @apply bg-white/80 dark:bg-black/80 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-lg shadow-sm;
   }
 }
 
