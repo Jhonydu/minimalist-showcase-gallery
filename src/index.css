@@ -88,11 +88,37 @@
     height: 100%;
     border-radius: 1rem 0 0 1rem;
     overflow: hidden;
+    position: relative;
+  }
+  
+  .viewer-container iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(1.05); /* Slightly scale up the iframe to remove any potential borders */
+    background-color: transparent;
   }
   
   @media (max-width: 768px) {
     .viewer-container {
       border-radius: 1rem 1rem 0 0;
+    }
+  }
+  
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }

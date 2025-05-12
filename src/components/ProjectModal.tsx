@@ -28,10 +28,10 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
           <div className="md:col-span-2 h-full">
             <div className="w-full aspect-video">
-              {/* Visualizador 3D - iframe do Sketchfab */}
+              {/* Visualizador 3D - iframe do Sketchfab com parâmetros otimizados */}
               <iframe
                 title="3D Model Viewer"
-                src={`${project.modelUrl}?autostart=1&ui_controls=0&ui_infos=0`}
+                src={`${project.modelUrl}?autostart=1&ui_controls=0&ui_infos=0&transparent=1`}
                 className="w-full h-full"
                 allow="autoplay; fullscreen; xr-spatial-tracking"
                 frameBorder="0"
@@ -41,8 +41,13 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
             {project.htmlContent && (
               <div className="p-6 border-t">
                 <div className="flex justify-between items-center mb-4">
-                  <h4 className="text-sm font-medium">Visualização HTML do projeto</h4>
-                  <Button variant="outline" size="sm" className="flex items-center gap-1">
+                  <h4 className="text-sm font-medium">Visualização interativa do projeto</h4>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex items-center gap-1"
+                    onClick={() => window.open(`/projetos/${project.id}`, '_blank')}
+                  >
                     <ExternalLink className="h-3.5 w-3.5" />
                     <span>Ver em tela cheia</span>
                   </Button>

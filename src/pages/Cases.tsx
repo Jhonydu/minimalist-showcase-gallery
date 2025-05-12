@@ -2,11 +2,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import Header from '@/components/Header';
 import { projectsData } from '@/data/projectsData';
 import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
 
 const Cases = () => {
   const navigate = useNavigate();
@@ -96,7 +95,7 @@ const Cases = () => {
           </div>
         </div>
         
-        {/* Optional: Mini Carousel of Thumbnails */}
+        {/* Mini Carousel of Thumbnails */}
         <div className="flex justify-center mt-4 overflow-x-auto py-2 px-4">
           {projectsData.map((project, idx) => (
             <button
