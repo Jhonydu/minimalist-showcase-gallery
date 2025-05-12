@@ -1,10 +1,11 @@
 
 import React from 'react';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X, ExternalLink } from 'lucide-react';
 import { Project } from './ProjectGallery';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -18,6 +19,10 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0 bg-white">
+        <VisuallyHidden>
+          <DialogTitle>{project.title}</DialogTitle>
+        </VisuallyHidden>
+        
         <button 
           className="absolute right-4 top-4 z-10 bg-white/80 p-2 rounded-full"
           onClick={onClose}
@@ -27,12 +32,12 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
           <div className="md:col-span-2 h-full">
-            <div className="w-full aspect-video">
-              {/* Visualizador 3D - iframe do Sketchfab com parâmetros otimizados */}
+            <div className="w-full aspect-video relative overflow-hidden">
+              {/* Enhanced 3D model viewer with better integration */}
               <iframe
-                title="3D Model Viewer"
+                title={`3D Model - ${project.title}`}
                 src={`${project.modelUrl}?autostart=1&ui_controls=0&ui_infos=0&transparent=1`}
-                className="w-full h-full"
+                className="w-full h-full absolute inset-0 scale-105"
                 allow="autoplay; fullscreen; xr-spatial-tracking"
                 frameBorder="0"
               ></iframe>

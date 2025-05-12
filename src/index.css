@@ -82,7 +82,7 @@
     @apply transition-all duration-300;
   }
   
-  /* Viewer container for 3D models */
+  /* Viewer container for 3D models - Enhanced for immersive display */
   .viewer-container {
     background-color: #e5e5e5;
     height: 100%;
@@ -98,6 +98,25 @@
     height: 100%;
     transform: scale(1.05); /* Slightly scale up the iframe to remove any potential borders */
     background-color: transparent;
+  }
+
+  /* Full screen 3D viewer for cases page */
+  .fullscreen-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+  }
+  
+  .fullscreen-viewer iframe {
+    width: 100%;
+    height: 100%;
+    transform: scale(1.1);
+    border: none;
   }
   
   @media (max-width: 768px) {

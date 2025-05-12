@@ -21,29 +21,31 @@ const Cases = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header 
-        openPricing={() => navigate('/', { state: { openPricing: true } })} 
-        openContact={() => navigate('/', { state: { openContact: true } })}
-        currentPage="casos"
-      />
-      
-      <div className="pt-24 md:pt-28 px-4 md:px-6 w-full h-[calc(100vh-6rem)]">
-        <div className="w-full h-full flex flex-col md:flex-row rounded-xl overflow-hidden">
-          {/* 3D Viewer Section - 80% on desktop */}
-          <div className="w-full md:w-4/5 h-[60vh] md:h-full viewer-container bg-[#e5e5e5]">
-            <iframe
-              title={`3D Model - ${currentCase.title}`}
-              src={`${currentCase.modelUrl}?autostart=1&ui_controls=0&ui_infos=0`}
-              className="w-full h-full"
-              frameBorder="0"
-              allow="autoplay; fullscreen; xr-spatial-tracking"
-            />
-          </div>
-          
-          {/* Information Section - 20% on desktop */}
-          <div className="w-full md:w-1/5 h-auto md:h-full bg-[#e5e5e5] p-6 flex flex-col">
-            <div className="animate-fade-in">
+    <div className="min-h-screen bg-[#e5e5e5]">
+      {/* 3D viewer as background that covers the entire screen */}
+      <div className="fixed inset-0 w-full h-full overflow-hidden">
+        <iframe
+          title={`3D Model - ${currentCase.title}`}
+          src={`${currentCase.modelUrl}?autospin=1&autostart=1&ui_controls=0&ui_infos=0&transparent=1`}
+          className="w-full h-full scale-110"
+          frameBorder="0"
+          allow="autoplay; fullscreen; xr-spatial-tracking"
+        />
+      </div>
+
+      {/* Content layout */}
+      <div className="relative z-10">
+        <Header 
+          openPricing={() => navigate('/', { state: { openPricing: true } })} 
+          openContact={() => navigate('/', { state: { openContact: true } })}
+          currentPage="casos"
+          className="bg-transparent backdrop-blur-sm"
+        />
+        
+        <div className="pt-24 md:pt-28 px-4 md:px-6 w-full h-[calc(100vh-6rem)] flex flex-col">
+          {/* Info panel */}
+          <div className="ml-auto w-full md:w-1/4 lg:w-1/5 bg-white/70 backdrop-blur-sm p-6 rounded-lg shadow-sm animate-fade-in">
+            <div>
               <h1 className="text-xl font-medium mb-4">{currentCase.title}</h1>
               <p className="text-sm text-muted-foreground mb-6">{currentCase.description}</p>
               
@@ -93,26 +95,28 @@ const Cases = () => {
               </Button>
             </div>
           </div>
-        </div>
-        
-        {/* Mini Carousel of Thumbnails */}
-        <div className="flex justify-center mt-4 overflow-x-auto py-2 px-4">
-          {projectsData.map((project, idx) => (
-            <button
-              key={project.id}
-              onClick={() => setCurrentIndex(idx)}
-              className={cn(
-                "mx-1 p-1 rounded-md transition-all",
-                currentIndex === idx ? "ring-2 ring-primary" : ""
-              )}
-            >
-              <img 
-                src={project.thumbnail} 
-                alt={project.title} 
-                className="h-12 w-16 object-cover rounded"
-              />
-            </button>
-          ))}
+          
+          {/* Mini Carousel of Thumbnails */}
+          <div className="fixed bottom-4 left-0 right-0 flex justify-center overflow-x-auto py-2 px-4">
+            <div className="flex gap-2 p-2 bg-white/50 backdrop-blur-sm rounded-full">
+              {projectsData.map((project, idx) => (
+                <button
+                  key={project.id}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={cn(
+                    "transition-all duration-300 rounded-full overflow-hidden",
+                    currentIndex === idx ? "ring-2 ring-primary scale-110" : "opacity-70 hover:opacity-100"
+                  )}
+                >
+                  <img 
+                    src={project.thumbnail} 
+                    alt={project.title} 
+                    className="h-10 w-10 object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
