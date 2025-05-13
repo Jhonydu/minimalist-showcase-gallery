@@ -33,7 +33,7 @@ const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
 
   return (
     <div className="w-full overflow-x-auto gallery-container">
-      {/* Category filters - Simplified design */}
+      {/* Category filters - Updated with consistent styling */}
       <div className="fixed top-24 left-6 z-10 py-3">
         <div className="flex items-center space-x-3">
           <Filter className="h-4 w-4 text-muted-foreground" />
@@ -58,7 +58,7 @@ const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
         </div>
       </div>
 
-      {/* Gallery */}
+      {/* Gallery - Updated with consistent styling */}
       <div className="flex space-x-6 pb-4 pt-36 px-6">
         {filteredProjects.map((project) => (
           <div
@@ -79,7 +79,7 @@ const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
                   <p className="text-sm text-white/80 drop-shadow-md uppercase">{project.type}</p>
                   <HoverCard>
                     <HoverCardTrigger asChild>
-                      <button className="rounded-full p-1 bg-white/20 backdrop-blur-sm">
+                      <button className="rounded-full p-1 bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors">
                         <Info className="h-3 w-3 text-white" />
                       </button>
                     </HoverCardTrigger>
@@ -90,7 +90,7 @@ const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
                 </div>
               </div>
               <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full flex items-center space-x-1 text-sm font-medium uppercase">
+                <div className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full flex items-center space-x-1 text-sm font-medium uppercase hover:bg-white transition-colors">
                   <span>VER DETALHES</span>
                   <ChevronRight className="h-4 w-4" />
                 </div>

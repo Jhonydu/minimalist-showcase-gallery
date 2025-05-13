@@ -5,10 +5,10 @@ import Header from '@/components/Header';
 import { projectsData } from '@/data/projectsData';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import PricingModal from '@/components/PricingModal';
 import ContactModal from '@/components/ContactModal';
 import { cn } from '@/lib/utils';
 import { toast } from '@/components/ui/sonner';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Cases = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,12 +21,12 @@ const Cases = () => {
     description: false,
     tags: false
   });
-  const [pricingModalOpen, setPricingModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [modelLoading, setModelLoading] = useState(true);
   const [transitioning, setTransitioning] = useState(false);
   const [filterCategory, setFilterCategory] = useState("TODOS");
   
+  const isMobile = useIsMobile();
   const currentCase = projectsData[currentIndex];
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -117,14 +117,6 @@ const Cases = () => {
 
   const toggleInfoPanel = () => {
     setInfoPanelCollapsed(!infoPanelCollapsed);
-  };
-
-  const handlePricingOpen = () => {
-    setPricingModalOpen(true);
-    toast("VISUALIZANDO INFORMAÇÕES DE PREÇOS", {
-      position: "bottom-right",
-      duration: 3000,
-    });
   };
 
   const handleContactOpen = () => {
@@ -233,93 +225,176 @@ const Cases = () => {
         introVisible ? "opacity-0" : "opacity-100"
       )}>
         <Header 
-          openPricing={handlePricingOpen}
           openContact={handleContactOpen}
           className="bg-transparent backdrop-blur-sm pointer-events-auto"
         />
         
         <div className="pt-24 md:pt-28 px-4 md:px-6 w-full h-[calc(100vh-6rem)] flex flex-col">
-          {/* Collapsible Info panel - Updated with new positioning and background */}
-          <div 
-            className={cn(
-              "transition-all duration-300 pointer-events-auto",
-              infoPanelCollapsed 
-                ? "ml-auto w-12" 
-                : "ml-auto w-full md:w-1/4 lg:w-1/5"
-            )}
-          >
-            {infoPanelCollapsed ? (
+          {/* Mobile navigation arrows */}
+          {isMobile && (
+            <>
               <button 
-                onClick={toggleInfoPanel}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center"
-                aria-label="Expandir painel de informações"
+                onClick={goToPreviousCase}
+                className="fixed left-2 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-black/5 hover:bg-black/10 rounded-full flex items-center justify-center pointer-events-auto transition-colors"
+                aria-label="Caso anterior"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-6 w-6" />
               </button>
-            ) : (
-              <div className="bg-white/30 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative">
+              <button 
+                onClick={goToNextCase}
+                className="fixed right-2 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-black/5 hover:bg-black/10 rounded-full flex items-center justify-center pointer-events-auto transition-colors"
+                aria-label="Próximo caso"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+            </>
+          )}
+          
+          {/* Collapsible Info panel - Redesigned with lower opacity */}
+          {isMobile ? (
+            // Mobile info panel - Starts from bottom
+            <div 
+              className={cn(
+                "fixed bottom-16 right-0 left-0 transition-all duration-300 pointer-events-auto z-20",
+                infoPanelCollapsed 
+                  ? "h-10 bg-transparent" 
+                  : "pb-16"
+              )}
+            >
+              {infoPanelCollapsed ? (
                 <button 
                   onClick={toggleInfoPanel}
-                  className="absolute -left-8 top-1/2 transform -translate-y-1/2 w-8 h-12 flex items-center justify-center"
-                  aria-label="Recolher painel de informações"
+                  className="mx-auto w-full flex items-center justify-center h-10"
+                  aria-label="Expandir painel de informações"
                 >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-
-                <div>
-                  <h1 className="text-xl font-medium mb-4 uppercase">{currentCase.title}</h1>
-                  <p className="text-sm text-muted-foreground mb-6 uppercase">{currentCase.description}</p>
-                  
-                  <div className="mb-6">
-                    <h3 className="text-sm font-medium mb-2 uppercase">TECNOLOGIAS</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {currentCase.type && (
-                        <span className="px-2 py-1 text-xs uppercase">{currentCase.type}</span>
-                      )}
-                      <span className="px-2 py-1 text-xs uppercase">EXOCAD</span>
-                      <span className="px-2 py-1 text-xs uppercase">3D PRINT</span>
-                    </div>
+                  <div className="bg-black/5 hover:bg-black/10 px-4 py-1 rounded-full flex items-center transition-colors">
+                    <span className="text-xs mr-1 uppercase">Informações</span>
+                    <ChevronRight className="h-3 w-3 rotate-90" />
                   </div>
-                  
-                  {currentCase.htmlContent && (
-                    <Button 
-                      variant="link"
-                      size="sm"
-                      className="w-full justify-start mb-2 p-0 uppercase hover:text-primary transition-colors group"
-                      onClick={() => setHtmlModalOpen(true)}
-                    >
-                      <ExternalLink className="mr-2 h-4 w-4 group-hover:text-primary transition-colors" />
-                      VER CASO COMPLETO (HTML)
-                    </Button>
-                  )}
-                  
-                  {/* Navigation buttons - Updated for better visibility */}
-                  <div className="mt-auto flex justify-between pt-4">
-                    <Button 
-                      variant="link" 
-                      size="sm" 
-                      onClick={goToPreviousCase} 
-                      className="p-0 uppercase hover:text-primary transition-colors"
-                    >
-                      <ChevronLeft className="h-4 w-4 mr-1" />
-                      ANTERIOR
-                    </Button>
-                    <Button 
-                      variant="link" 
-                      size="sm" 
-                      onClick={goToNextCase} 
-                      className="p-0 uppercase hover:text-primary transition-colors"
-                    >
-                      PRÓXIMO
-                      <ChevronRight className="h-4 w-4 ml-1" />
-                    </Button>
+                </button>
+              ) : (
+                <div className="bg-black/5 backdrop-blur-sm p-4 rounded-t-lg mx-4 animate-fade-in relative">
+                  <button 
+                    onClick={toggleInfoPanel}
+                    className="absolute top-2 right-2 p-1 rounded-full bg-black/5 hover:bg-black/10 transition-colors"
+                    aria-label="Recolher painel de informações"
+                  >
+                    <ChevronRight className="h-4 w-4 rotate-270" />
+                  </button>
+
+                  <div>
+                    <h1 className="text-base font-medium mb-2 uppercase">{currentCase.title}</h1>
+                    <p className="text-xs text-muted-foreground mb-3 uppercase">{currentCase.description}</p>
+                    
+                    <div className="mb-3">
+                      <h3 className="text-xs font-medium mb-1 uppercase">TECNOLOGIAS</h3>
+                      <div className="flex flex-wrap gap-1">
+                        {currentCase.type && (
+                          <span className="px-1.5 py-0.5 text-xs uppercase bg-black/5 rounded-sm">{currentCase.type}</span>
+                        )}
+                        <span className="px-1.5 py-0.5 text-xs uppercase bg-black/5 rounded-sm">EXOCAD</span>
+                        <span className="px-1.5 py-0.5 text-xs uppercase bg-black/5 rounded-sm">3D PRINT</span>
+                      </div>
+                    </div>
+                    
+                    {currentCase.htmlContent && (
+                      <Button 
+                        variant="link"
+                        size="sm"
+                        className="w-full justify-start p-0 text-xs uppercase hover:text-primary transition-colors group"
+                        onClick={() => setHtmlModalOpen(true)}
+                      >
+                        <ExternalLink className="mr-1 h-3 w-3 group-hover:text-primary transition-colors" />
+                        VER CASO COMPLETO (HTML)
+                      </Button>
+                    )}
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          ) : (
+            // Desktop info panel
+            <div 
+              className={cn(
+                "transition-all duration-300 pointer-events-auto",
+                infoPanelCollapsed 
+                  ? "ml-auto w-12" 
+                  : "ml-auto w-full md:w-1/4 lg:w-1/5"
+              )}
+            >
+              {infoPanelCollapsed ? (
+                <button 
+                  onClick={toggleInfoPanel}
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center"
+                  aria-label="Expandir painel de informações"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+              ) : (
+                <div className="bg-black/5 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative">
+                  <button 
+                    onClick={toggleInfoPanel}
+                    className="absolute -left-8 top-1/2 transform -translate-y-1/2 w-8 h-12 flex items-center justify-center"
+                    aria-label="Recolher painel de informações"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+
+                  <div>
+                    <h1 className="text-xl font-medium mb-4 uppercase">{currentCase.title}</h1>
+                    <p className="text-sm text-muted-foreground mb-6 uppercase">{currentCase.description}</p>
+                    
+                    <div className="mb-6">
+                      <h3 className="text-sm font-medium mb-2 uppercase">TECNOLOGIAS</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {currentCase.type && (
+                          <span className="px-2 py-1 text-xs bg-black/5 hover:bg-black/10 transition-colors rounded-sm uppercase">{currentCase.type}</span>
+                        )}
+                        <span className="px-2 py-1 text-xs bg-black/5 hover:bg-black/10 transition-colors rounded-sm uppercase">EXOCAD</span>
+                        <span className="px-2 py-1 text-xs bg-black/5 hover:bg-black/10 transition-colors rounded-sm uppercase">3D PRINT</span>
+                      </div>
+                    </div>
+                    
+                    {currentCase.htmlContent && (
+                      <Button 
+                        variant="link"
+                        size="sm"
+                        className="w-full justify-start mb-2 p-0 uppercase hover:text-primary transition-colors group"
+                        onClick={() => setHtmlModalOpen(true)}
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4 group-hover:text-primary transition-colors" />
+                        VER CASO COMPLETO (HTML)
+                      </Button>
+                    )}
+                    
+                    {/* Navigation buttons - Only on desktop */}
+                    <div className="mt-auto flex justify-between pt-4">
+                      <Button 
+                        variant="link" 
+                        size="sm" 
+                        onClick={goToPreviousCase} 
+                        className="p-0 uppercase hover:text-primary transition-colors"
+                      >
+                        <ChevronLeft className="h-4 w-4 mr-1" />
+                        ANTERIOR
+                      </Button>
+                      <Button 
+                        variant="link" 
+                        size="sm" 
+                        onClick={goToNextCase} 
+                        className="p-0 uppercase hover:text-primary transition-colors"
+                      >
+                        PRÓXIMO
+                        <ChevronRight className="h-4 w-4 ml-1" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
           
-          {/* Filter Bar - Redesigned with tighter spacing */}
+          {/* Filter Bar - Redesigned with consistent styling */}
           <div className="fixed top-24 left-6 z-10 py-3 pointer-events-auto">
             <div className="flex items-center space-x-3">
               <Filter className="h-4 w-4 text-muted-foreground" />
@@ -344,7 +419,7 @@ const Cases = () => {
             </div>
           </div>
           
-          {/* Mini Carousel of Thumbnails - Updated to remove background */}
+          {/* Mini Carousel of Thumbnails - Updated for consistent styling */}
           <div className="fixed bottom-4 left-0 right-0 flex justify-center overflow-x-auto py-2 px-4 pointer-events-auto">
             <div className="flex gap-2 p-2">
               {filteredThumbnails.map((project, idx) => (
@@ -394,12 +469,6 @@ const Cases = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Pricing Modal */}
-      <PricingModal 
-        isOpen={pricingModalOpen} 
-        onClose={() => setPricingModalOpen(false)} 
-      />
-      
       {/* Contact Modal */}
       <ContactModal 
         isOpen={contactModalOpen} 

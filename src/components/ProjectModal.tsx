@@ -62,7 +62,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
               )}
             </div>
             
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+            <div className="bg-black/5 backdrop-blur-sm rounded-lg p-6">
               <h3 className="text-xl font-medium text-white mb-4">{project.title}</h3>
               <div className="text-sm text-white/70 mb-4">{project.type}</div>
               <p className="text-sm text-white/90">{project.description}</p>
@@ -70,9 +70,9 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
               <div className="mt-8 pt-8 border-t border-white/10">
                 <h4 className="text-sm font-medium text-white mb-2">Tecnologias utilizadas</h4>
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-2 py-1 bg-white/20 text-xs rounded-full text-white">Exocad</span>
-                  <span className="px-2 py-1 bg-white/20 text-xs rounded-full text-white">3D Print</span>
-                  <span className="px-2 py-1 bg-white/20 text-xs rounded-full text-white">Zircônia</span>
+                  <span className="px-2 py-1 bg-white/10 hover:bg-white/15 transition-colors text-xs rounded-full text-white">Exocad</span>
+                  <span className="px-2 py-1 bg-white/10 hover:bg-white/15 transition-colors text-xs rounded-full text-white">3D Print</span>
+                  <span className="px-2 py-1 bg-white/10 hover:bg-white/15 transition-colors text-xs rounded-full text-white">Zircônia</span>
                 </div>
               </div>
               
@@ -80,7 +80,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                 <Button
                   variant="outline"
                   onClick={onClose}
-                  className="bg-white/20 hover:bg-white/30 text-white border-white/20"
+                  className="bg-white/20 hover:bg-white/30 transition-colors text-white border-white/20"
                 >
                   Fechar
                 </Button>
