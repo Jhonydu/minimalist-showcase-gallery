@@ -6,36 +6,46 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 interface HeaderProps {
+  openPricing: () => void;
   openContact: () => void;
   className?: string;
   currentPage?: string;
 }
 
-const Header = ({ openContact, className }: HeaderProps) => {
+const Header = ({ openPricing, openContact, className }: HeaderProps) => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   
   return (
     <header className={cn(
-      "W-FULL PY-6 PX-6 FLEX JUSTIFY-BETWEEN ITEMS-CENTER FIXED TOP-0 LEFT-0 RIGHT-0 Z-10",
-      "BG-BACKGROUND/80 BACKDROP-BLUR-MD", 
+      "w-full py-6 px-6 flex justify-between items-center fixed top-0 left-0 right-0 z-10",
+      "bg-background/80 backdrop-blur-md", 
       className
     )}>
       <div 
-        className="TEXT-XL FONT-MEDIUM TRACKING-TIGHTER CURSOR-POINTER FLEX ITEMS-CENTER GAP-2" 
+        className="text-xl font-medium tracking-tighter cursor-pointer flex items-center gap-2" 
         onClick={() => navigate('/')}
       >
-        <span className="FONT-SEMIBOLD UPPERCASE">STUDIO</span>
-        <span className="TEXT-SM FONT-LIGHT TEXT-MUTED-FOREGROUND UPPERCASE">/ JONHNATAS LIMA</span>
+        <span className="font-semibold uppercase">STUDIO</span>
+        <span className="text-sm font-light text-muted-foreground uppercase">/ JONHNATAS LIMA</span>
       </div>
-      <nav className="FLEX ITEMS-CENTER SPACE-X-4 MD:SPACE-X-6">
+      <nav className="flex items-center space-x-4 md:space-x-6">
+        <Button 
+          onClick={openPricing} 
+          variant="ghost"
+          className="text-sm font-medium relative overflow-hidden group px-2 py-1 h-auto uppercase"
+        >
+          <span className="relative z-10">PREÇOS</span>
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+        </Button>
+        
         <Button 
           onClick={openContact}
           variant="ghost"
-          className="TEXT-SM FONT-MEDIUM RELATIVE OVERFLOW-HIDDEN GROUP PX-2 PY-1 H-AUTO UPPERCASE"
+          className="text-sm font-medium relative overflow-hidden group px-2 py-1 h-auto uppercase"
         >
-          <span className="RELATIVE Z-10">CONTATO</span>
-          <span className="ABSOLUTE BOTTOM-0 LEFT-0 W-FULL H-0.5 BG-PRIMARY SCALE-X-0 GROUP-HOVER:SCALE-X-100 TRANSITION-TRANSFORM DURATION-300 ORIGIN-LEFT"></span>
+          <span className="relative z-10">CONTATO</span>
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
         </Button>
       </nav>
     </header>
