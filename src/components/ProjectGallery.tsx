@@ -35,7 +35,7 @@ const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
     <div className="w-full overflow-x-auto gallery-container">
       {/* Category filters - Simplified design */}
       <div className="fixed top-24 left-6 z-10 py-3">
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-3">
           <Filter className="h-4 w-4 text-muted-foreground" />
           <div className="flex items-center">
             {categories.map((category, idx) => (
@@ -44,9 +44,9 @@ const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
                 <button
                   onClick={() => setSelectedCategory(category)}
                   className={cn(
-                    "px-2 py-1 text-xs uppercase transition-colors",
+                    "px-1 py-1 text-xs uppercase transition-colors",
                     selectedCategory === category
-                      ? 'text-primary font-medium'
+                      ? 'text-primary font-medium underline underline-offset-4'
                       : 'text-muted-foreground hover:text-primary'
                   )}
                 >

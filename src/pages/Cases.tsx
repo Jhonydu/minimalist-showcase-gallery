@@ -86,6 +86,25 @@ const Cases = () => {
     };
   }, [currentIndex]);
 
+  // New effect to handle filter category changes
+  useEffect(() => {
+    if (filterCategory === "TODOS") {
+      // If filter is set to "TODOS", go back to the first case
+      setTransitioning(true);
+      setCurrentIndex(0);
+    } else {
+      // Find the first case with the selected category
+      const firstMatchingIndex = projectsData.findIndex(
+        project => project.type?.toUpperCase() === filterCategory
+      );
+      
+      if (firstMatchingIndex !== -1) {
+        setTransitioning(true);
+        setCurrentIndex(firstMatchingIndex);
+      }
+    }
+  }, [filterCategory]);
+
   const goToNextCase = () => {
     setTransitioning(true);
     setCurrentIndex((prev) => (prev + 1) % projectsData.length);
@@ -220,7 +239,7 @@ const Cases = () => {
         />
         
         <div className="pt-24 md:pt-28 px-4 md:px-6 w-full h-[calc(100vh-6rem)] flex flex-col">
-          {/* Collapsible Info panel */}
+          {/* Collapsible Info panel - Updated with new positioning and background */}
           <div 
             className={cn(
               "transition-all duration-300 pointer-events-auto",
@@ -232,16 +251,16 @@ const Cases = () => {
             {infoPanelCollapsed ? (
               <button 
                 onClick={toggleInfoPanel}
-                className="w-12 h-12 bg-white/70 backdrop-blur-sm rounded-l-lg flex items-center justify-center"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center"
                 aria-label="Expandir painel de informações"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
             ) : (
-              <div className="bg-white/70 backdrop-blur-sm p-6 rounded-lg shadow-sm animate-fade-in relative">
+              <div className="bg-white/30 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative">
                 <button 
                   onClick={toggleInfoPanel}
-                  className="absolute -left-8 top-1/2 transform -translate-y-1/2 w-8 h-12 bg-white/70 backdrop-blur-sm rounded-l-lg flex items-center justify-center"
+                  className="absolute -left-8 top-1/2 transform -translate-y-1/2 w-8 h-12 flex items-center justify-center"
                   aria-label="Recolher painel de informações"
                 >
                   <ChevronRight className="h-5 w-5" />
@@ -255,18 +274,18 @@ const Cases = () => {
                     <h3 className="text-sm font-medium mb-2 uppercase">TECNOLOGIAS</h3>
                     <div className="flex flex-wrap gap-2">
                       {currentCase.type && (
-                        <span className="px-2 py-1 bg-white/50 text-xs uppercase">{currentCase.type}</span>
+                        <span className="px-2 py-1 text-xs uppercase">{currentCase.type}</span>
                       )}
-                      <span className="px-2 py-1 bg-white/50 text-xs uppercase">EXOCAD</span>
-                      <span className="px-2 py-1 bg-white/50 text-xs uppercase">3D PRINT</span>
+                      <span className="px-2 py-1 text-xs uppercase">EXOCAD</span>
+                      <span className="px-2 py-1 text-xs uppercase">3D PRINT</span>
                     </div>
                   </div>
                   
                   {currentCase.htmlContent && (
                     <Button 
-                      variant="outline"
+                      variant="link"
                       size="sm"
-                      className="w-full justify-start mb-2 bg-white/80 hover:bg-white group uppercase"
+                      className="w-full justify-start mb-2 p-0 uppercase hover:text-primary transition-colors group"
                       onClick={() => setHtmlModalOpen(true)}
                     >
                       <ExternalLink className="mr-2 h-4 w-4 group-hover:text-primary transition-colors" />
@@ -274,22 +293,22 @@ const Cases = () => {
                     </Button>
                   )}
                   
-                  {/* Navigation buttons */}
+                  {/* Navigation buttons - Updated for better visibility */}
                   <div className="mt-auto flex justify-between pt-4">
                     <Button 
-                      variant="outline" 
+                      variant="link" 
                       size="sm" 
                       onClick={goToPreviousCase} 
-                      className="bg-white/80 hover:bg-white uppercase"
+                      className="p-0 uppercase hover:text-primary transition-colors"
                     >
                       <ChevronLeft className="h-4 w-4 mr-1" />
                       ANTERIOR
                     </Button>
                     <Button 
-                      variant="outline" 
+                      variant="link" 
                       size="sm" 
                       onClick={goToNextCase} 
-                      className="bg-white/80 hover:bg-white uppercase"
+                      className="p-0 uppercase hover:text-primary transition-colors"
                     >
                       PRÓXIMO
                       <ChevronRight className="h-4 w-4 ml-1" />
@@ -300,20 +319,20 @@ const Cases = () => {
             )}
           </div>
           
-          {/* Filter Bar - Redesigned */}
+          {/* Filter Bar - Redesigned with tighter spacing */}
           <div className="fixed top-24 left-6 z-10 py-3 pointer-events-auto">
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-3">
               <Filter className="h-4 w-4 text-muted-foreground" />
-              <div className="flex space-x-2">
+              <div className="flex items-center">
                 {categories.map((category, idx) => (
                   <React.Fragment key={category}>
-                    {idx > 0 && <span className="text-muted-foreground self-center">|</span>}
+                    {idx > 0 && <span className="text-muted-foreground mx-1">|</span>}
                     <button
                       onClick={() => setFilterCategory(category)}
                       className={cn(
-                        "px-2 py-1 text-xs uppercase whitespace-nowrap transition-colors",
+                        "px-1 py-1 text-xs uppercase transition-colors",
                         filterCategory === category
-                          ? 'text-primary font-medium'
+                          ? 'text-primary font-medium underline underline-offset-4'
                           : 'text-muted-foreground hover:text-primary'
                       )}
                     >
@@ -325,7 +344,7 @@ const Cases = () => {
             </div>
           </div>
           
-          {/* Mini Carousel of Thumbnails */}
+          {/* Mini Carousel of Thumbnails - Updated to remove background */}
           <div className="fixed bottom-4 left-0 right-0 flex justify-center overflow-x-auto py-2 px-4 pointer-events-auto">
             <div className="flex gap-2 p-2">
               {filteredThumbnails.map((project, idx) => (
