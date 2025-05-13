@@ -5,7 +5,6 @@ import Header from '@/components/Header';
 import { projectsData } from '@/data/projectsData';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import PricingModal from '@/components/PricingModal';
 import ContactModal from '@/components/ContactModal';
 import { cn } from '@/lib/utils';
 import { toast } from '@/components/ui/sonner';
@@ -21,7 +20,6 @@ const Cases = () => {
     description: false,
     tags: false
   });
-  const [pricingModalOpen, setPricingModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [modelLoading, setModelLoading] = useState(true);
   const [transitioning, setTransitioning] = useState(false);
@@ -117,14 +115,6 @@ const Cases = () => {
 
   const toggleInfoPanel = () => {
     setInfoPanelCollapsed(!infoPanelCollapsed);
-  };
-
-  const handlePricingOpen = () => {
-    setPricingModalOpen(true);
-    toast("VISUALIZANDO INFORMAÇÕES DE PREÇOS", {
-      position: "bottom-right",
-      duration: 3000,
-    });
   };
 
   const handleContactOpen = () => {
@@ -233,13 +223,12 @@ const Cases = () => {
         introVisible ? "opacity-0" : "opacity-100"
       )}>
         <Header 
-          openPricing={handlePricingOpen}
           openContact={handleContactOpen}
           className="bg-transparent backdrop-blur-sm pointer-events-auto"
         />
         
         <div className="pt-24 md:pt-28 px-4 md:px-6 w-full h-[calc(100vh-6rem)] flex flex-col">
-          {/* Collapsible Info panel - Updated with new positioning and background */}
+          {/* Collapsible Info panel - Updated positioning and styling */}
           <div 
             className={cn(
               "transition-all duration-300 pointer-events-auto",
@@ -251,16 +240,16 @@ const Cases = () => {
             {infoPanelCollapsed ? (
               <button 
                 onClick={toggleInfoPanel}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center"
+                className="absolute right-6 top-24 w-10 h-10 flex items-center justify-center z-20"
                 aria-label="Expandir painel de informações"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
             ) : (
-              <div className="bg-white/30 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative">
+              <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative border-t border-l border-white/20" style={{borderTopRightRadius: '12px', borderBottomLeftRadius: '12px'}}>
                 <button 
                   onClick={toggleInfoPanel}
-                  className="absolute -left-8 top-1/2 transform -translate-y-1/2 w-8 h-12 flex items-center justify-center"
+                  className="absolute right-3 top-3 w-8 h-8 flex items-center justify-center"
                   aria-label="Recolher painel de informações"
                 >
                   <ChevronRight className="h-5 w-5" />
@@ -274,10 +263,10 @@ const Cases = () => {
                     <h3 className="text-sm font-medium mb-2 uppercase">TECNOLOGIAS</h3>
                     <div className="flex flex-wrap gap-2">
                       {currentCase.type && (
-                        <span className="px-2 py-1 text-xs uppercase">{currentCase.type}</span>
+                        <span className="text-xs uppercase">{currentCase.type}</span>
                       )}
-                      <span className="px-2 py-1 text-xs uppercase">EXOCAD</span>
-                      <span className="px-2 py-1 text-xs uppercase">3D PRINT</span>
+                      <span className="text-xs uppercase">EXOCAD</span>
+                      <span className="text-xs uppercase">3D PRINT</span>
                     </div>
                   </div>
                   
@@ -319,14 +308,14 @@ const Cases = () => {
             )}
           </div>
           
-          {/* Filter Bar - Redesigned with tighter spacing */}
+          {/* Filter Bar - Reduced spacing */}
           <div className="fixed top-24 left-6 z-10 py-3 pointer-events-auto">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               <Filter className="h-4 w-4 text-muted-foreground" />
               <div className="flex items-center">
                 {categories.map((category, idx) => (
                   <React.Fragment key={category}>
-                    {idx > 0 && <span className="text-muted-foreground mx-1">|</span>}
+                    {idx > 0 && <span className="text-muted-foreground mx-0.5">|</span>}
                     <button
                       onClick={() => setFilterCategory(category)}
                       className={cn(
@@ -341,6 +330,49 @@ const Cases = () => {
                   </React.Fragment>
                 ))}
               </div>
+            </div>
+          </div>
+          
+          {/* Mobile Info Panel - Moved to bottom with collapse/expand button in middle */}
+          <div className="md:hidden fixed bottom-16 left-0 right-0 z-10 pointer-events-auto">
+            <div className="flex flex-col items-center">
+              <button 
+                onClick={toggleInfoPanel}
+                className="mb-2 w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-full"
+              >
+                {infoPanelCollapsed ? 
+                  <ChevronRight className="h-5 w-5 transform -rotate-90" /> : 
+                  <ChevronRight className="h-5 w-5 transform rotate-90" />
+                }
+              </button>
+              
+              {!infoPanelCollapsed && (
+                <div className="bg-white/5 backdrop-blur-sm p-4 w-full max-h-28 overflow-y-auto border-t border-white/20">
+                  <h3 className="text-sm font-medium uppercase">{currentCase.title}</h3>
+                  <p className="text-xs text-muted-foreground uppercase line-clamp-2">{currentCase.description}</p>
+                  
+                  <div className="flex justify-between mt-2">
+                    <Button 
+                      variant="link" 
+                      size="sm" 
+                      onClick={goToPreviousCase}
+                      className="p-0 text-xs uppercase hover:text-primary transition-colors"
+                    >
+                      <ChevronLeft className="h-3 w-3 mr-0.5" />
+                      ANTERIOR
+                    </Button>
+                    <Button 
+                      variant="link" 
+                      size="sm" 
+                      onClick={goToNextCase}
+                      className="p-0 text-xs uppercase hover:text-primary transition-colors"
+                    >
+                      PRÓXIMO
+                      <ChevronRight className="h-3 w-3 ml-0.5" />
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           
@@ -393,12 +425,6 @@ const Cases = () => {
           </div>
         </DialogContent>
       </Dialog>
-
-      {/* Pricing Modal */}
-      <PricingModal 
-        isOpen={pricingModalOpen} 
-        onClose={() => setPricingModalOpen(false)} 
-      />
       
       {/* Contact Modal */}
       <ContactModal 

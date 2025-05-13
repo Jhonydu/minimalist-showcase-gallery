@@ -32,22 +32,22 @@ const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
     : projects.filter(project => project.type?.toUpperCase() === selectedCategory);
 
   return (
-    <div className="w-full overflow-x-auto gallery-container">
-      {/* Category filters - Simplified design */}
-      <div className="fixed top-24 left-6 z-10 py-3">
-        <div className="flex items-center space-x-3">
-          <Filter className="h-4 w-4 text-muted-foreground" />
-          <div className="flex items-center">
+    <div className="W-FULL OVERFLOW-X-AUTO GALLERY-CONTAINER">
+      {/* Category filters - Simplified design with reduced spacing */}
+      <div className="FIXED TOP-24 LEFT-6 Z-10 PY-3">
+        <div className="FLEX ITEMS-CENTER SPACE-X-2">
+          <Filter className="H-4 W-4 TEXT-MUTED-FOREGROUND" />
+          <div className="FLEX ITEMS-CENTER">
             {categories.map((category, idx) => (
               <React.Fragment key={category}>
-                {idx > 0 && <span className="text-muted-foreground mx-1">|</span>}
+                {idx > 0 && <span className="TEXT-MUTED-FOREGROUND MX-0.5">|</span>}
                 <button
                   onClick={() => setSelectedCategory(category)}
                   className={cn(
-                    "px-1 py-1 text-xs uppercase transition-colors",
+                    "PX-1 PY-1 TEXT-XS UPPERCASE TRANSITION-COLORS",
                     selectedCategory === category
-                      ? 'text-primary font-medium underline underline-offset-4'
-                      : 'text-muted-foreground hover:text-primary'
+                      ? 'TEXT-PRIMARY FONT-MEDIUM UNDERLINE UNDERLINE-OFFSET-4'
+                      : 'TEXT-MUTED-FOREGROUND HOVER:TEXT-PRIMARY'
                   )}
                 >
                   {category}
@@ -59,40 +59,40 @@ const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
       </div>
 
       {/* Gallery */}
-      <div className="flex space-x-6 pb-4 pt-36 px-6">
+      <div className="FLEX SPACE-X-6 PB-4 PT-36 PX-6">
         {filteredProjects.map((project) => (
           <div
             key={project.id}
-            className="project-item flex-shrink-0 w-72 h-96 cursor-pointer group"
+            className="PROJECT-ITEM FLEX-SHRINK-0 W-72 H-96 CURSOR-POINTER GROUP"
             onClick={() => onProjectClick(project)}
           >
-            <div className="w-full h-full relative overflow-hidden rounded-md">
-              <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-300"></div>
+            <div className="W-FULL H-FULL RELATIVE OVERFLOW-HIDDEN ROUNDED-MD">
+              <div className="ABSOLUTE INSET-0 BG-BLACK/5 GROUP-HOVER:BG-BLACK/0 TRANSITION-COLORS DURATION-300"></div>
               <img
                 src={project.thumbnail}
                 alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="W-FULL H-FULL OBJECT-COVER TRANSITION-TRANSFORM DURATION-500 GROUP-HOVER:SCALE-105"
               />
-              <div className="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/70 to-transparent">
-                <h3 className="text-lg font-medium text-white drop-shadow-md uppercase">{project.title}</h3>
-                <div className="flex items-center justify-between">
-                  <p className="text-sm text-white/80 drop-shadow-md uppercase">{project.type}</p>
+              <div className="ABSOLUTE BOTTOM-0 LEFT-0 P-4 W-FULL BG-GRADIENT-TO-T FROM-BLACK/70 TO-TRANSPARENT">
+                <h3 className="TEXT-LG FONT-MEDIUM TEXT-WHITE DROP-SHADOW-MD UPPERCASE">{project.title}</h3>
+                <div className="FLEX ITEMS-CENTER JUSTIFY-BETWEEN">
+                  <p className="TEXT-SM TEXT-WHITE/80 DROP-SHADOW-MD UPPERCASE">{project.type}</p>
                   <HoverCard>
                     <HoverCardTrigger asChild>
-                      <button className="rounded-full p-1 bg-white/20 backdrop-blur-sm">
-                        <Info className="h-3 w-3 text-white" />
+                      <button className="ROUNDED-FULL P-1 BG-WHITE/20 BACKDROP-BLUR-SM">
+                        <Info className="H-3 W-3 TEXT-WHITE" />
                       </button>
                     </HoverCardTrigger>
-                    <HoverCardContent side="top" className="w-64 text-sm uppercase">
+                    <HoverCardContent side="top" className="W-64 TEXT-SM UPPERCASE">
                       {project.description}
                     </HoverCardContent>
                   </HoverCard>
                 </div>
               </div>
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full flex items-center space-x-1 text-sm font-medium uppercase">
+              <div className="ABSOLUTE INSET-0 FLEX ITEMS-CENTER JUSTIFY-CENTER BG-BLACK/40 OPACITY-0 GROUP-HOVER:OPACITY-100 TRANSITION-OPACITY DURATION-300">
+                <div className="PX-4 PY-2 BG-WHITE/90 BACKDROP-BLUR-SM ROUNDED-FULL FLEX ITEMS-CENTER SPACE-X-1 TEXT-SM FONT-MEDIUM UPPERCASE">
                   <span>VER DETALHES</span>
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="H-4 W-4" />
                 </div>
               </div>
             </div>
