@@ -25,18 +25,18 @@ const Cases = () => {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [modelLoading, setModelLoading] = useState(true);
   const [transitioning, setTransitioning] = useState(false);
-  const [filterCategory, setFilterCategory] = useState("Todos");
+  const [filterCategory, setFilterCategory] = useState("TODOS");
   
   const currentCase = projectsData[currentIndex];
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // Extract unique categories from projects
-  const categories = ["Todos", ...Array.from(new Set(projectsData.map(project => project.type || "Outros")))];
+  // Extract unique categories from projects and convert to uppercase
+  const categories = ["TODOS", ...Array.from(new Set(projectsData.map(project => project.type?.toUpperCase() || "OUTROS")))];
 
   // Handle intro animation & timing with sequential text reveal
   useEffect(() => {
     // Set title for SEO
-    document.title = "Portfólio 3D Odontológico | Jonhnatas Lima | Projetos Exocad";
+    document.title = "PORTFÓLIO 3D ODONTOLÓGICO | JONHNATAS LIMA | PROJETOS EXOCAD";
     
     // Sequence the text animations
     const titleTimer = setTimeout(() => setTextAnimation(prev => ({ ...prev, title: true })), 500);
@@ -102,7 +102,7 @@ const Cases = () => {
 
   const handlePricingOpen = () => {
     setPricingModalOpen(true);
-    toast("Visualizando informações de preços", {
+    toast("VISUALIZANDO INFORMAÇÕES DE PREÇOS", {
       position: "bottom-right",
       duration: 3000,
     });
@@ -110,16 +110,16 @@ const Cases = () => {
 
   const handleContactOpen = () => {
     setContactModalOpen(true);
-    toast("Visualizando informações de contato", {
+    toast("VISUALIZANDO INFORMAÇÕES DE CONTATO", {
       position: "bottom-right",
       duration: 3000,
     });
   };
 
   // Filter projects based on category
-  const filteredThumbnails = filterCategory === "Todos" 
+  const filteredThumbnails = filterCategory === "TODOS" 
     ? projectsData 
-    : projectsData.filter(project => project.type === filterCategory);
+    : projectsData.filter(project => project.type?.toUpperCase() === filterCategory);
 
   return (
     <div className="min-h-screen bg-[#e5e5e5] overflow-hidden">
@@ -135,10 +135,10 @@ const Cases = () => {
             "transition-all duration-1000 transform",
             textAnimation.title ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}>
-            <h1 className="text-4xl sm:text-6xl font-bold mb-4 tracking-tight">
-              Portfólio Digital Odontológico
+            <h1 className="text-4xl sm:text-6xl font-bold mb-4 tracking-tight uppercase">
+              PORTFÓLIO DIGITAL ODONTOLÓGICO
             </h1>
-            <p className="text-2xl text-muted-foreground mt-2 font-light">Jonhnatas Lima</p>
+            <p className="text-2xl text-muted-foreground mt-2 font-light uppercase">JONHNATAS LIMA</p>
           </div>
           
           <div className={cn(
@@ -147,9 +147,9 @@ const Cases = () => {
           )}>
             <div className="h-px w-24 bg-primary/50 mx-auto my-8"></div>
             
-            <p className="text-xl leading-relaxed">
-              Especialista em modelagem 3D para aplicações odontológicas,
-              com foco em precisão, estética e funcionalidade.
+            <p className="text-xl leading-relaxed uppercase">
+              ESPECIALISTA EM MODELAGEM 3D PARA APLICAÇÕES ODONTOLÓGICAS,
+              COM FOCO EM PRECISÃO, ESTÉTICA E FUNCIONALIDADE.
             </p>
           </div>
           
@@ -157,11 +157,11 @@ const Cases = () => {
             "transition-all duration-1000 delay-500 transform",
             textAnimation.description ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Utilizando software Exocad para criar soluções personalizadas,
-              desde próteses sobre implantes até restaurações estéticas complexas.
-              Integração completa com fluxo de trabalho digital, permitindo
-              resultados de alta precisão e previsibilidade clínica.
+            <p className="text-lg text-muted-foreground leading-relaxed uppercase">
+              UTILIZANDO SOFTWARE EXOCAD PARA CRIAR SOLUÇÕES PERSONALIZADAS,
+              DESDE PRÓTESES SOBRE IMPLANTES ATÉ RESTAURAÇÕES ESTÉTICAS COMPLEXAS.
+              INTEGRAÇÃO COMPLETA COM FLUXO DE TRABALHO DIGITAL, PERMITINDO
+              RESULTADOS DE ALTA PRECISÃO E PREVISIBILIDADE CLÍNICA.
             </p>
           </div>
           
@@ -169,11 +169,11 @@ const Cases = () => {
             "flex flex-wrap justify-center gap-4 py-6 transition-all duration-1000 delay-700 transform",
             textAnimation.tags ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}>
-            <div className="bg-secondary/50 px-4 py-2 rounded-full text-sm font-medium">Exocad DentalCAD</div>
-            <div className="bg-secondary/50 px-4 py-2 rounded-full text-sm font-medium">CAD/CAM</div>
-            <div className="bg-secondary/50 px-4 py-2 rounded-full text-sm font-medium">Impressão 3D</div>
-            <div className="bg-secondary/50 px-4 py-2 rounded-full text-sm font-medium">Zircônia</div>
-            <div className="bg-secondary/50 px-4 py-2 rounded-full text-sm font-medium">Dissilicato</div>
+            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">EXOCAD DENTALCAD</div>
+            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">CAD/CAM</div>
+            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">IMPRESSÃO 3D</div>
+            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">ZIRCÔNIA</div>
+            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">DISSILICATO</div>
           </div>
         </div>
       </div>
@@ -187,7 +187,7 @@ const Cases = () => {
       >
         <iframe
           ref={iframeRef}
-          title={`3D Model - ${currentCase.title}`}
+          title={`3D MODEL - ${currentCase.title.toUpperCase()}`}
           src={`${currentCase.modelUrl}?autospin=1&autostart=1&ui_controls=1&ui_infos=0&transparent=1`}
           className="w-full h-full scale-110"
           frameBorder="0"
@@ -203,7 +203,7 @@ const Cases = () => {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <span className="mt-3 text-sm">Carregando modelo...</span>
+            <span className="mt-3 text-sm uppercase">CARREGANDO MODELO...</span>
           </div>
         </div>
       )}
@@ -248,17 +248,17 @@ const Cases = () => {
                 </button>
 
                 <div>
-                  <h1 className="text-xl font-medium mb-4">{currentCase.title}</h1>
-                  <p className="text-sm text-muted-foreground mb-6">{currentCase.description}</p>
+                  <h1 className="text-xl font-medium mb-4 uppercase">{currentCase.title}</h1>
+                  <p className="text-sm text-muted-foreground mb-6 uppercase">{currentCase.description}</p>
                   
                   <div className="mb-6">
-                    <h3 className="text-sm font-medium mb-2">Tecnologias</h3>
+                    <h3 className="text-sm font-medium mb-2 uppercase">TECNOLOGIAS</h3>
                     <div className="flex flex-wrap gap-2">
                       {currentCase.type && (
-                        <span className="px-2 py-1 bg-white/50 text-xs rounded-full">{currentCase.type}</span>
+                        <span className="px-2 py-1 bg-white/50 text-xs uppercase">{currentCase.type}</span>
                       )}
-                      <span className="px-2 py-1 bg-white/50 text-xs rounded-full">Exocad</span>
-                      <span className="px-2 py-1 bg-white/50 text-xs rounded-full">3D Print</span>
+                      <span className="px-2 py-1 bg-white/50 text-xs uppercase">EXOCAD</span>
+                      <span className="px-2 py-1 bg-white/50 text-xs uppercase">3D PRINT</span>
                     </div>
                   </div>
                   
@@ -266,11 +266,11 @@ const Cases = () => {
                     <Button 
                       variant="outline"
                       size="sm"
-                      className="w-full justify-start mb-2 bg-white/80 hover:bg-white group"
+                      className="w-full justify-start mb-2 bg-white/80 hover:bg-white group uppercase"
                       onClick={() => setHtmlModalOpen(true)}
                     >
                       <ExternalLink className="mr-2 h-4 w-4 group-hover:text-primary transition-colors" />
-                      Ver Caso Completo (HTML)
+                      VER CASO COMPLETO (HTML)
                     </Button>
                   )}
                   
@@ -280,18 +280,18 @@ const Cases = () => {
                       variant="outline" 
                       size="sm" 
                       onClick={goToPreviousCase} 
-                      className="bg-white/80 hover:bg-white"
+                      className="bg-white/80 hover:bg-white uppercase"
                     >
                       <ChevronLeft className="h-4 w-4 mr-1" />
-                      Anterior
+                      ANTERIOR
                     </Button>
                     <Button 
                       variant="outline" 
                       size="sm" 
                       onClick={goToNextCase} 
-                      className="bg-white/80 hover:bg-white"
+                      className="bg-white/80 hover:bg-white uppercase"
                     >
-                      Próximo
+                      PRÓXIMO
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>
                   </div>
@@ -300,33 +300,34 @@ const Cases = () => {
             )}
           </div>
           
-          {/* Filter Bar */}
-          <div className="fixed top-24 left-6 right-6 z-10 bg-background/70 backdrop-blur-sm py-3 rounded-lg pointer-events-auto">
-            <div className="flex items-center space-x-2 mb-2 px-4">
+          {/* Filter Bar - Redesigned */}
+          <div className="fixed top-24 left-6 z-10 py-3 pointer-events-auto">
+            <div className="flex items-center space-x-6">
               <Filter className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground font-medium">Filtrar por:</span>
-            </div>
-            <div className="flex space-x-2 overflow-x-auto pb-2 px-4">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setFilterCategory(category)}
-                  className={cn(
-                    "px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors",
-                    filterCategory === category
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-                  )}
-                >
-                  {category}
-                </button>
-              ))}
+              <div className="flex space-x-2">
+                {categories.map((category, idx) => (
+                  <React.Fragment key={category}>
+                    {idx > 0 && <span className="text-muted-foreground self-center">|</span>}
+                    <button
+                      onClick={() => setFilterCategory(category)}
+                      className={cn(
+                        "px-2 py-1 text-xs uppercase whitespace-nowrap transition-colors",
+                        filterCategory === category
+                          ? 'text-primary font-medium'
+                          : 'text-muted-foreground hover:text-primary'
+                      )}
+                    >
+                      {category}
+                    </button>
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
           </div>
           
           {/* Mini Carousel of Thumbnails */}
           <div className="fixed bottom-4 left-0 right-0 flex justify-center overflow-x-auto py-2 px-4 pointer-events-auto">
-            <div className="flex gap-2 p-2 bg-white/50 backdrop-blur-sm rounded-full">
+            <div className="flex gap-2 p-2">
               {filteredThumbnails.map((project, idx) => (
                 <button
                   key={project.id}
@@ -342,12 +343,12 @@ const Cases = () => {
                   <div className="relative">
                     <img 
                       src={project.thumbnail} 
-                      alt={project.title} 
+                      alt={project.title.toUpperCase()}
                       className="h-10 w-10 object-cover"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                      <span className="text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-                        {project.title.substring(0, 8)}...
+                      <span className="text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity uppercase">
+                        {project.title.substring(0, 8).toUpperCase()}...
                       </span>
                     </div>
                   </div>
@@ -391,13 +392,13 @@ const Cases = () => {
 
 // Sample HTML content for the visualization inspired by kenyihancco.com
 const htmlContent = `
-<div style="font-family: 'Inter', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; color: #333;">
+<div style="font-family: 'Inter', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; text-transform: uppercase;">
   <div style="margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 30px;">
-    <h1 style="font-size: 32px; margin-bottom: 10px; font-weight: 600;">Caso Clínico: Prótese sobre Implante</h1>
+    <h1 style="font-size: 32px; margin-bottom: 10px; font-weight: 600;">CASO CLÍNICO: PRÓTESE SOBRE IMPLANTE</h1>
     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
-      <span style="background-color: #f3f4f6; padding: 6px 14px; border-radius: 9999px; font-size: 14px; font-weight: 500;">Implante</span>
-      <span style="background-color: #f3f4f6; padding: 6px 14px; border-radius: 9999px; font-size: 14px; font-weight: 500;">CAD/CAM</span>
-      <span style="background-color: #f3f4f6; padding: 6px 14px; border-radius: 9999px; font-size: 14px; font-weight: 500;">Zircônia</span>
+      <span style="background-color: #f3f4f6; padding: 6px 14px; font-size: 14px; font-weight: 500;">IMPLANTE</span>
+      <span style="background-color: #f3f4f6; padding: 6px 14px; font-size: 14px; font-weight: 500;">CAD/CAM</span>
+      <span style="background-color: #f3f4f6; padding: 6px 14px; font-size: 14px; font-weight: 500;">ZIRCÔNIA</span>
     </div>
   </div>
 
@@ -411,66 +412,65 @@ const htmlContent = `
   </div>
 
   <div style="margin-bottom: 40px;">
-    <h2 style="font-size: 22px; margin-bottom: 16px; font-weight: 600;">Descrição do Caso</h2>
+    <h2 style="font-size: 22px; margin-bottom: 16px; font-weight: 600;">DESCRIÇÃO DO CASO</h2>
     <p style="line-height: 1.8; color: #374151; margin-bottom: 16px;">
-      Paciente com ausência dos elementos 14 a 16, necessitando reabilitação protética sobre implantes. 
-      Foi realizado planejamento digital completo, utilizando escaneamento intraoral e modelagem no software Exocad.
+      PACIENTE COM AUSÊNCIA DOS ELEMENTOS 14 A 16, NECESSITANDO REABILITAÇÃO PROTÉTICA SOBRE IMPLANTES. 
+      FOI REALIZADO PLANEJAMENTO DIGITAL COMPLETO, UTILIZANDO ESCANEAMENTO INTRAORAL E MODELAGEM NO SOFTWARE EXOCAD.
     </p>
     <p style="line-height: 1.8; color: #374151;">
-      Após o planejamento virtual, foi confeccionada infraestrutura em zircônia fresada com alta precisão,
-      garantindo adaptação passiva sobre os implantes e excelente resultado estético final.
+      APÓS O PLANEJAMENTO VIRTUAL, FOI CONFECCIONADA INFRAESTRUTURA EM ZIRCÔNIA FRESADA COM ALTA PRECISÃO,
+      GARANTINDO ADAPTAÇÃO PASSIVA SOBRE OS IMPLANTES E EXCELENTE RESULTADO ESTÉTICO FINAL.
     </p>
   </div>
 
   <div style="margin-bottom: 40px; background-color: #f9fafb; padding: 30px; border-radius: 12px;">
-    <h2 style="font-size: 22px; margin-bottom: 20px; font-weight: 600;">Especificações Técnicas</h2>
+    <h2 style="font-size: 22px; margin-bottom: 20px; font-weight: 600;">ESPECIFICAÇÕES TÉCNICAS</h2>
     <ul style="list-style-type: none; padding: 0; margin: 0;">
       <li style="padding: 12px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">Material</span>
-        <span>Zircônia multicamadas CAD/CAM</span>
+        <span style="font-weight: 600; color: #111;">MATERIAL</span>
+        <span>ZIRCÔNIA MULTICAMADAS CAD/CAM</span>
       </li>
       <li style="padding: 12px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">Software</span>
-        <span>Exocad DentalCAD 3.1</span>
+        <span style="font-weight: 600; color: #111;">SOFTWARE</span>
+        <span>EXOCAD DENTALCAD 3.1</span>
       </li>
       <li style="padding: 12px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">Implantes</span>
-        <span>Neodent GM 4.3 x 11.5mm</span>
+        <span style="font-weight: 600; color: #111;">IMPLANTES</span>
+        <span>NEODENT GM 4.3 X 11.5MM</span>
       </li>
       <li style="padding: 12px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">Conexão</span>
-        <span>Interface de titânio</span>
+        <span style="font-weight: 600; color: #111;">CONEXÃO</span>
+        <span>INTERFACE DE TITÂNIO</span>
       </li>
       <li style="padding: 12px 0; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">Acabamento</span>
-        <span>Caracterização e glaze</span>
+        <span style="font-weight: 600; color: #111;">ACABAMENTO</span>
+        <span>CARACTERIZAÇÃO E GLAZE</span>
       </li>
     </ul>
   </div>
 
   <div>
-    <h2 style="font-size: 22px; margin-bottom: 20px; font-weight: 600;">Vantagens da Técnica</h2>
+    <h2 style="font-size: 22px; margin-bottom: 20px; font-weight: 600;">VANTAGENS DA TÉCNICA</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
       <div style="background-color: #f3f4f6; padding: 24px; border-radius: 12px; text-align: center;">
-        <h3 style="font-weight: 600; margin-bottom: 8px; font-size: 18px;">Precisão</h3>
-        <p style="font-size: 15px; color: #6b7280; line-height: 1.6;">Alta adaptação marginal e excelente ajuste oclusal</p>
+        <h3 style="font-weight: 600; margin-bottom: 8px; font-size: 18px;">PRECISÃO</h3>
+        <p style="font-size: 15px; color: #6b7280; line-height: 1.6;">ALTA ADAPTAÇÃO MARGINAL E EXCELENTE AJUSTE OCLUSAL</p>
       </div>
       <div style="background-color: #f3f4f6; padding: 24px; border-radius: 12px; text-align: center;">
-        <h3 style="font-weight: 600; margin-bottom: 8px; font-size: 18px;">Estética</h3>
-        <p style="font-size: 15px; color: #6b7280; line-height: 1.6;">Resultado natural e harmonioso com os elementos adjacentes</p>
+        <h3 style="font-weight: 600; margin-bottom: 8px; font-size: 18px;">ESTÉTICA</h3>
+        <p style="font-size: 15px; color: #6b7280; line-height: 1.6;">RESULTADO NATURAL E HARMONIOSO COM OS ELEMENTOS ADJACENTES</p>
       </div>
       <div style="background-color: #f3f4f6; padding: 24px; border-radius: 12px; text-align: center;">
-        <h3 style="font-weight: 600; margin-bottom: 8px; font-size: 18px;">Durabilidade</h3>
-        <p style="font-size: 15px; color: #6b7280; line-height: 1.6;">Material de alta resistência para função prolongada</p>
+        <h3 style="font-weight: 600; margin-bottom: 8px; font-size: 18px;">DURABILIDADE</h3>
+        <p style="font-size: 15px; color: #6b7280; line-height: 1.6;">MATERIAL DE ALTA RESISTÊNCIA PARA FUNÇÃO PROLONGADA</p>
       </div>
     </div>
   </div>
   
   <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eee; text-align: center;">
-    <p style="color: #6b7280; font-size: 14px;">© 2025 Portfólio Digital Odontológico | Jonhnatas Lima</p>
+    <p style="color: #6b7280; font-size: 14px;">© 2025 PORTFÓLIO DIGITAL ODONTOLÓGICO | JONHNATAS LIMA</p>
   </div>
 </div>
 `;
 
 export default Cases;
-

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { ChevronRight, Filter, Info } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export interface Project {
   id: string;
@@ -20,38 +21,40 @@ interface ProjectGalleryProps {
 }
 
 const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
+  const [selectedCategory, setSelectedCategory] = useState<string>("TODOS");
   
-  // Extract unique categories from projects
-  const categories = ["Todos", ...Array.from(new Set(projects.map(project => project.type)))];
+  // Extract unique categories from projects and convert to uppercase
+  const categories = ["TODOS", ...Array.from(new Set(projects.map(project => project.type?.toUpperCase() || "OUTROS")))];
   
   // Filter projects based on selected category
-  const filteredProjects = selectedCategory === "Todos" 
+  const filteredProjects = selectedCategory === "TODOS" 
     ? projects 
-    : projects.filter(project => project.type === selectedCategory);
+    : projects.filter(project => project.type?.toUpperCase() === selectedCategory);
 
   return (
     <div className="w-full overflow-x-auto gallery-container">
-      {/* Category filters */}
-      <div className="fixed top-24 left-6 right-6 z-10 bg-background/90 backdrop-blur-sm py-3">
-        <div className="flex items-center space-x-2 mb-2">
+      {/* Category filters - Simplified design */}
+      <div className="fixed top-24 left-6 z-10 py-3">
+        <div className="flex items-center space-x-6">
           <Filter className="h-4 w-4 text-muted-foreground" />
-          <span className="text-sm text-muted-foreground font-medium">Filtrar por:</span>
-        </div>
-        <div className="flex space-x-2 overflow-x-auto pb-2">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${
-                selectedCategory === category
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+          <div className="flex items-center">
+            {categories.map((category, idx) => (
+              <React.Fragment key={category}>
+                {idx > 0 && <span className="text-muted-foreground mx-1">|</span>}
+                <button
+                  onClick={() => setSelectedCategory(category)}
+                  className={cn(
+                    "px-2 py-1 text-xs uppercase transition-colors",
+                    selectedCategory === category
+                      ? 'text-primary font-medium'
+                      : 'text-muted-foreground hover:text-primary'
+                  )}
+                >
+                  {category}
+                </button>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -71,24 +74,24 @@ const ProjectGallery = ({ projects, onProjectClick }: ProjectGalleryProps) => {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/70 to-transparent">
-                <h3 className="text-lg font-medium text-white drop-shadow-md">{project.title}</h3>
+                <h3 className="text-lg font-medium text-white drop-shadow-md uppercase">{project.title}</h3>
                 <div className="flex items-center justify-between">
-                  <p className="text-sm text-white/80 drop-shadow-md">{project.type}</p>
+                  <p className="text-sm text-white/80 drop-shadow-md uppercase">{project.type}</p>
                   <HoverCard>
                     <HoverCardTrigger asChild>
                       <button className="rounded-full p-1 bg-white/20 backdrop-blur-sm">
                         <Info className="h-3 w-3 text-white" />
                       </button>
                     </HoverCardTrigger>
-                    <HoverCardContent side="top" className="w-64 text-sm">
+                    <HoverCardContent side="top" className="w-64 text-sm uppercase">
                       {project.description}
                     </HoverCardContent>
                   </HoverCard>
                 </div>
               </div>
               <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full flex items-center space-x-1 text-sm font-medium">
-                  <span>Ver detalhes</span>
+                <div className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full flex items-center space-x-1 text-sm font-medium uppercase">
+                  <span>VER DETALHES</span>
                   <ChevronRight className="h-4 w-4" />
                 </div>
               </div>
