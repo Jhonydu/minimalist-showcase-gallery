@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 
 interface HeaderProps {
   openContact: () => void;
-  openPricing?: () => void;  // Added as optional since we want to make it backward compatible
   className?: string;
   currentPage?: string;
 }
