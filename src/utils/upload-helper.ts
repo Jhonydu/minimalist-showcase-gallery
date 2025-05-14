@@ -27,13 +27,18 @@ export async function uploadHtmlFile(
       throw error;
     }
     
-    // Get the public URL
+    // Get the public URL and append content_type parameter for proper display
     const { data: { publicUrl } } = supabase.storage
       .from(bucketName)
       .getPublicUrl(filePath);
     
+    // Append content_type=text/html to ensure proper rendering
+    const finalUrl = publicUrl.includes('?') 
+      ? `${publicUrl}&content_type=text/html` 
+      : `${publicUrl}?content_type=text/html`;
+    
     return { 
-      url: publicUrl,
+      url: finalUrl,
       error: null
     };
   } catch (error) {
@@ -43,4 +48,13 @@ export async function uploadHtmlFile(
       error: error instanceof Error ? error : new Error('Unknown error occurred')
     };
   }
+}
+
+// Helper to process existing URLs to ensure HTML content type
+export function processHtmlUrl(url: string): string {
+  if (!url) return '';
+  
+  return url.includes('?')
+    ? `${url}&content_type=text/html`
+    : `${url}?content_type=text/html`;
 }

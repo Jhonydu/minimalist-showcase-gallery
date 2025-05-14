@@ -51,7 +51,7 @@ const InfoPanel = ({
             aria-label="Expandir painel de informações"
           >
             <div className="bg-white/5 hover:bg-white/10 px-4 py-1 rounded-full flex items-center transition-colors">
-              <h3 className="text-sm font-medium mr-2 uppercase text-white">{title}</h3>
+              <h3 className="text-lg font-medium mr-2 uppercase text-white">{title}</h3>
               <ChevronUp className="h-3 w-3 text-white" />
             </div>
           </button>

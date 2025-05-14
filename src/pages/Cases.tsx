@@ -8,7 +8,6 @@ import AboutModal from '@/components/AboutModal';
 import { cn } from '@/lib/utils';
 import { toast } from '@/components/ui/sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Import the components
 import IntroSection from '@/components/cases/IntroSection';
@@ -52,10 +51,12 @@ const Cases = () => {
     const descriptionTimer = setTimeout(() => setTextAnimation(prev => ({ ...prev, description: true })), 3200);
     const tagsTimer = setTimeout(() => setTextAnimation(prev => ({ ...prev, tags: true })), 5000);
     
-    // Hide intro after 15 seconds instead of 10
+    // Hide intro after 10 seconds - reduced from 15
     const introTimer = setTimeout(() => {
-      setIntroVisible(false);
-    }, 15000);
+      if (!modelLoading) {
+        setIntroVisible(false);
+      }
+    }, 10000);
     
     return () => {
       clearTimeout(titleTimer);
@@ -64,17 +65,22 @@ const Cases = () => {
       clearTimeout(tagsTimer);
       clearTimeout(introTimer);
     };
-  }, []);
+  }, [modelLoading]);
   
   // Handle model loading status
   useEffect(() => {
-    setModelLoading(true);
-  }, [currentIndex]);
+    if (!introVisible) {
+      setModelLoading(true);
+    }
+  }, [currentIndex, introVisible]);
 
   const handleModelLoad = () => {
     setTimeout(() => {
       setTransitioning(false);
       setModelLoading(false);
+      
+      // If the intro is still visible and the model is loaded,
+      // we'll let the natural timeout hide the intro
     }, 800);
   };
 
@@ -144,6 +150,15 @@ const Cases = () => {
 
   return (
     <div className="min-h-screen bg-black overflow-hidden">
+      {/* Always render ModelViewer to allow preloading in background during intro */}
+      <ModelViewer
+        modelUrl={currentCase.modelUrl}
+        title={currentCase.title}
+        modelLoading={introVisible || modelLoading}
+        transitioning={transitioning}
+        onLoad={handleModelLoad}
+      />
+
       {/* Intro Section - updated with modelLoaded prop and onSkipIntro callback */}
       <IntroSection 
         introVisible={introVisible} 
@@ -151,17 +166,6 @@ const Cases = () => {
         onSkipIntro={skipIntro}
         modelLoaded={!modelLoading} 
       />
-
-      {/* 3D Model Viewer - not showing in intro anymore */}
-      {!introVisible && (
-        <ModelViewer
-          modelUrl={currentCase.modelUrl}
-          title={currentCase.title}
-          modelLoading={modelLoading}
-          transitioning={transitioning}
-          onLoad={handleModelLoad}
-        />
-      )}
 
       {/* Content layout */}
       <div className={cn(
@@ -196,31 +200,8 @@ const Cases = () => {
             selectedCategory={filterCategory}
             onSelectCategory={setFilterCategory}
           />
-          
-          {/* Navigation buttons outside the gallery */}
-          <div className="relative w-full mb-4 pointer-events-auto">
-            <div className="flex justify-between items-center">
-              {/* Previous button */}
-              <button 
-                onClick={goToPreviousCase}
-                className="w-14 h-14 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 transition-colors text-white z-10 backdrop-blur-sm"
-                aria-label="Caso anterior"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
-              
-              {/* Next button */}
-              <button 
-                onClick={goToNextCase}
-                className="w-14 h-14 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 transition-colors text-white z-10 backdrop-blur-sm"
-                aria-label="Próximo caso"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
-            </div>
-          </div>
-          
-          {/* Thumbnail Carousel */}
+
+          {/* Thumbnail Carousel with integrated navigation buttons */}
           <ThumbnailCarousel
             projects={filteredThumbnails}
             currentProjectId={currentCase.id}
