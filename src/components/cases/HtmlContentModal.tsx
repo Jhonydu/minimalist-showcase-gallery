@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { supabase } from '@/integrations/supabase/client';
-import { Loader2 } from 'lucide-react';
+import { Loader2, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface HtmlContentModalProps {
   isOpen: boolean;
@@ -20,8 +20,9 @@ const HtmlContentModal = ({ isOpen, onOpenChange, htmlContent, exocadHtmlUrl }: 
   useEffect(() => {
     if (isOpen) {
       setIsIframeLoading(true);
+      setActiveTab(exocadHtmlUrl ? 'exocad' : 'details');
     }
-  }, [isOpen]);
+  }, [isOpen, exocadHtmlUrl]);
 
   const handleIframeLoad = () => {
     setIsIframeLoading(false);
@@ -30,7 +31,16 @@ const HtmlContentModal = ({ isOpen, onOpenChange, htmlContent, exocadHtmlUrl }: 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl p-0 overflow-hidden border-none bg-transparent">
-        <div className="w-full h-[80vh] bg-gradient-to-br from-[#9b87f5] to-black p-6 rounded-lg">
+        <div className="w-full h-[80vh] bg-gradient-to-br from-[#9b87f5] to-black p-6 rounded-lg relative">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => onOpenChange(false)}
+            className="absolute right-4 top-4 z-50 bg-black/20 hover:bg-black/40 text-white"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          
           <Tabs 
             value={activeTab} 
             onValueChange={setActiveTab}
@@ -75,6 +85,7 @@ const HtmlContentModal = ({ isOpen, onOpenChange, htmlContent, exocadHtmlUrl }: 
                 {htmlContent && (
                   <div 
                     className="w-full h-full overflow-auto p-4 styled-html-content"
+                    style={{ color: 'white' }}
                     dangerouslySetInnerHTML={{ __html: htmlContent }}
                   />
                 )}

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Project {
   id: string;
@@ -10,18 +11,37 @@ interface Project {
   htmlContent: string;
   type: string;
   description: string;
+  exocadHtmlUrl?: string;
 }
 
 interface ThumbnailCarouselProps {
   projects: Project[];
   currentProjectId: string;
   onSelectProject: (index: number) => void;
+  onNavigateNext: () => void;
+  onNavigatePrevious: () => void;
 }
 
-const ThumbnailCarousel = ({ projects, currentProjectId, onSelectProject }: ThumbnailCarouselProps) => {
+const ThumbnailCarousel = ({ 
+  projects, 
+  currentProjectId, 
+  onSelectProject,
+  onNavigateNext,
+  onNavigatePrevious
+}: ThumbnailCarouselProps) => {
   return (
     <div className="fixed bottom-4 left-0 right-0 flex justify-center overflow-x-auto py-2 px-4 pointer-events-auto">
-      <div className="flex gap-2 p-2">
+      <div className="flex items-center gap-2 p-2">
+        {/* Previous button */}
+        <button
+          onClick={onNavigatePrevious}
+          className="h-14 w-14 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/15 transition-colors transform hover:scale-105"
+          aria-label="Caso anterior"
+        >
+          <ChevronLeft className="h-6 w-6 text-white" />
+        </button>
+        
+        {/* Thumbnails */}
         {projects.map((project, idx) => (
           <button
             key={project.id}
@@ -45,6 +65,15 @@ const ThumbnailCarousel = ({ projects, currentProjectId, onSelectProject }: Thum
             </div>
           </button>
         ))}
+        
+        {/* Next button */}
+        <button
+          onClick={onNavigateNext}
+          className="h-14 w-14 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/15 transition-colors transform hover:scale-105"
+          aria-label="Próximo caso"
+        >
+          <ChevronRight className="h-6 w-6 text-white" />
+        </button>
       </div>
     </div>
   );

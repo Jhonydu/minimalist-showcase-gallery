@@ -13,10 +13,10 @@ interface AboutModalProps {
 const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-md p-0 bg-black/90 border-none">
+      <DialogContent className="sm:max-w-3xl p-0 bg-black/90 border-none">
         <div className="p-6 backdrop-blur-sm">
           <DialogHeader>
-            <DialogTitle className="text-xl font-medium text-white">Quem Sou Eu</DialogTitle>
+            <DialogTitle className="text-xl font-medium text-white">Sobre Mim</DialogTitle>
             <button 
               className="absolute right-4 top-4 text-white/70 hover:text-white transition-colors"
               onClick={onClose}
@@ -25,62 +25,65 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
             </button>
           </DialogHeader>
           
-          <div className="space-y-6 mt-6">
-            {/* Profile image */}
-            <div className="w-32 h-32 mx-auto relative overflow-hidden rounded-full mb-6 border border-white/10">
-              <AspectRatio ratio={1/1} className="bg-black/20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            {/* Large photo area */}
+            <div className="overflow-hidden rounded-lg">
+              <AspectRatio ratio={4/5} className="bg-black/20">
                 <div className="w-full h-full bg-gradient-to-br from-purple-light to-purple-dark opacity-70 flex items-center justify-center">
                   <span className="text-4xl font-light text-white">JL</span>
                 </div>
               </AspectRatio>
             </div>
             
-            <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 transition-all hover:bg-white/10">
-              <h3 className="text-lg font-medium text-white mb-2">Jonhnatas Lima</h3>
-              <p className="text-sm text-white/70 leading-relaxed">
-                Especialista em modelagem digital 3D para aplicações odontológicas, com mais de 8 anos de experiência
-                no desenvolvimento de soluções personalizadas usando tecnologia ExoCAD.
-              </p>
-            </div>
-            
-            <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 transition-all hover:bg-white/10">
-              <h3 className="text-lg font-medium text-white mb-2">Expertise</h3>
-              <ul className="space-y-2 text-sm text-white/70">
-                <li className="flex gap-2">
-                  <span className="text-white">•</span>
-                  <span>Modelagem de próteses sobre implantes</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-white">•</span>
-                  <span>Planejamento digital de soluções estéticas</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-white">•</span>
-                  <span>Integração com tecnologias CAD/CAM</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-white">•</span>
-                  <span>Desenvolvimento de fluxos digitais odontológicos</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 transition-all hover:bg-white/10">
-              <h3 className="text-lg font-medium text-white mb-2">Missão</h3>
-              <p className="text-sm text-white/70 leading-relaxed">
-                Criar soluções odontológicas personalizadas com precisão técnica e foco na harmonia estética,
-                garantindo resultados de excelência que transformam sorrisos e vidas.
-              </p>
-            </div>
-            
-            <div className="pt-2 text-center">
-              <Button 
-                variant="outline" 
-                onClick={onClose}
-                className="bg-white/10 hover:bg-white/20 text-white border-white/10"
-              >
-                Fechar
-              </Button>
+            {/* Content area - unified in a single glass panel */}
+            <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 space-y-6">
+              <div>
+                <h3 className="text-lg font-medium text-white mb-2">Jonhnatas Lima</h3>
+                <p className="text-sm text-white/70 leading-relaxed text-justify">
+                  Especialista em modelagem digital 3D para aplicações odontológicas, com mais de 8 anos de experiência
+                  no desenvolvimento de soluções personalizadas usando tecnologia ExoCAD.
+                </p>
+              </div>
+              
+              <div>
+                <h4 className="text-sm font-medium text-white mb-2">Expertise</h4>
+                <ul className="space-y-2 text-sm text-white/70">
+                  <li className="flex gap-2">
+                    <span className="text-white">•</span>
+                    <span>Modelagem de próteses sobre implantes</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-white">•</span>
+                    <span>Planejamento digital de soluções estéticas</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-white">•</span>
+                    <span>Integração com tecnologias CAD/CAM</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-white">•</span>
+                    <span>Desenvolvimento de fluxos digitais odontológicos</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="text-sm font-medium text-white mb-2">Missão</h4>
+                <p className="text-sm text-white/70 leading-relaxed text-justify">
+                  Criar soluções odontológicas personalizadas com precisão técnica e foco na harmonia estética,
+                  garantindo resultados de excelência que transformam sorrisos e vidas.
+                </p>
+              </div>
+              
+              <div className="pt-2 text-center">
+                <Button 
+                  variant="outline" 
+                  onClick={onClose}
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/10"
+                >
+                  Fechar
+                </Button>
+              </div>
             </div>
           </div>
         </div>

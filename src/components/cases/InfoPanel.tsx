@@ -51,7 +51,7 @@ const InfoPanel = ({
             aria-label="Expandir painel de informações"
           >
             <div className="bg-white/5 hover:bg-white/10 px-4 py-1 rounded-full flex items-center transition-colors">
-              <span className="text-xs mr-1 uppercase text-white">Informações</span>
+              <h3 className="text-sm font-medium mr-2 uppercase text-white">{title}</h3>
               <ChevronUp className="h-3 w-3 text-white" />
             </div>
           </button>
@@ -66,8 +66,8 @@ const InfoPanel = ({
             </button>
 
             <div>
-              <h1 className="text-base font-medium mb-2 uppercase text-white">{title}</h1>
-              <p className="text-xs text-white/60 mb-3 uppercase">{description}</p>
+              <h1 className="text-lg font-medium mb-3 uppercase text-white">{title}</h1>
+              <p className="text-xs text-white/60 mb-3 uppercase text-justify">{description}</p>
               
               <div className="mb-3">
                 <h3 className="text-xs font-medium mb-1 uppercase text-white/80">TECNOLOGIAS</h3>
@@ -104,18 +104,23 @@ const InfoPanel = ({
       className={cn(
         "absolute top-28 right-6 transition-all duration-300 pointer-events-auto",
         infoPanelCollapsed 
-          ? "w-12 h-12" 
+          ? "w-auto" 
           : "w-full md:w-1/4 lg:w-1/5"
       )}
     >
       {infoPanelCollapsed ? (
-        <button 
-          onClick={onToggleInfoPanel}
-          className="absolute right-0 top-0 w-12 h-12 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm hover:bg-black/30 transition-colors"
-          aria-label="Expandir painel de informações"
+        <div
+          className="flex items-center bg-black/20 backdrop-blur-sm rounded-full"
         >
-          <ChevronLeft className="h-5 w-5 text-white" />
-        </button>
+          <h2 className="text-xl font-medium text-white ml-4 uppercase">{title}</h2>
+          <button 
+            onClick={onToggleInfoPanel}
+            className="ml-4 w-12 h-12 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm hover:bg-black/30 transition-colors"
+            aria-label="Expandir painel de informações"
+          >
+            <ChevronLeft className="h-5 w-5 text-white" />
+          </button>
+        </div>
       ) : (
         <div className="bg-black/20 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative">
           <button 
@@ -127,8 +132,8 @@ const InfoPanel = ({
           </button>
 
           <div>
-            <h1 className="text-xl font-medium mb-4 uppercase text-white">{title}</h1>
-            <p className="text-sm text-white/60 mb-6 uppercase">{description}</p>
+            <h1 className="text-2xl font-medium mb-4 uppercase text-white">{title}</h1>
+            <p className="text-sm text-white/60 mb-6 uppercase text-justify leading-relaxed">{description}</p>
             
             <div className="mb-6">
               <h3 className="text-sm font-medium mb-2 uppercase text-white/80">TECNOLOGIAS</h3>
@@ -152,28 +157,6 @@ const InfoPanel = ({
                 {exocadHtmlUrl ? 'VER EXOCAD 3D (HTML)' : 'VER CASO COMPLETO (HTML)'}
               </Button>
             )}
-            
-            {/* Navigation buttons - Only on desktop */}
-            <div className="mt-auto flex justify-between pt-4">
-              <Button 
-                variant="link" 
-                size="sm" 
-                onClick={onNavigatePrevious} 
-                className="p-0 uppercase hover:text-white text-white/60 transition-colors"
-              >
-                <ChevronLeft className="h-4 w-4 mr-1" />
-                ANTERIOR
-              </Button>
-              <Button 
-                variant="link" 
-                size="sm" 
-                onClick={onNavigateNext} 
-                className="p-0 uppercase hover:text-white text-white/60 transition-colors"
-              >
-                PRÓXIMO
-                <ChevronRight className="h-4 w-4 ml-1" />
-              </Button>
-            </div>
           </div>
         </div>
       )}

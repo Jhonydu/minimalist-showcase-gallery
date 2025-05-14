@@ -1,3 +1,4 @@
+
 import { Project } from "@/components/ProjectGallery";
 
 // Dados específicos para casos odontológicos
@@ -18,9 +19,9 @@ export const projectsData: Project[] = [
         </ul>
       </div>
     `,
-    exocadHtmlUrl: "", // Added empty string as default value
+    exocadHtmlUrl: "https://ilaftvbwammedhiozylx.supabase.co/storage/v1/object/public/exocad_html/molar-teste/MOLAR%2037.html",
     type: "Unitário",
-    description: "Coroa unitária em dissilicato de lítio para molar inferior, desenhada para oclusão ideal e alta resistência em região posterior.",
+    description: "Coroa unitária em zircônia para molar inferior, desenhada para oclusão ideal e alta resistência em região posterior.",
     category: "Odontológico"
   },
   {
@@ -39,7 +40,7 @@ export const projectsData: Project[] = [
         </ul>
       </div>
     `,
-    exocadHtmlUrl: "", // Added empty string as default value
+    exocadHtmlUrl: "https://ilaftvbwammedhiozylx.supabase.co/storage/v1/object/public/exocad_html/molar-teste/MOLAR%2037.html",
     type: "Implante",
     description: "Reconstrução estética de 12 a 22 com estrutura fresada, acabamento em cerâmica e planejamento digital completo.",
     category: "Odontológico"
@@ -60,7 +61,7 @@ export const projectsData: Project[] = [
         </ul>
       </div>
     `,
-    exocadHtmlUrl: "", // Added empty string as default value
+    exocadHtmlUrl: "https://ilaftvbwammedhiozylx.supabase.co/storage/v1/object/public/exocad_html/molar-teste/MOLAR%2037.html",
     type: "Lente",
     description: "Laminados ultrafinos para correção estética com preservação máxima da estrutura dental, design personalizado com mock-up digital prévio.",
     category: "Odontológico"
@@ -81,7 +82,7 @@ export const projectsData: Project[] = [
         </ul>
       </div>
     `,
-    exocadHtmlUrl: "", // Added empty string as default value
+    exocadHtmlUrl: "https://ilaftvbwammedhiozylx.supabase.co/storage/v1/object/public/exocad_html/molar-teste/MOLAR%2037.html",
     type: "Protocolo",
     description: "Reabilitação total com protocolo híbrido sobre 6 implantes, planejamento guiado por tomografia e fluxo digital completo.",
     category: "Odontológico"
@@ -102,7 +103,7 @@ export const projectsData: Project[] = [
         </ul>
       </div>
     `,
-    exocadHtmlUrl: "", // Added empty string as default value
+    exocadHtmlUrl: "https://ilaftvbwammedhiozylx.supabase.co/storage/v1/object/public/exocad_html/molar-teste/MOLAR%2037.html",
     type: "Placa",
     description: "Placa para bruxismo com design anatômico preciso, fabricada com tecnologia CAD/CAM para máximo conforto e durabilidade.",
     category: "Odontológico"
@@ -123,7 +124,7 @@ export const projectsData: Project[] = [
         </ul>
       </div>
     `,
-    exocadHtmlUrl: "", // Added empty string as default value
+    exocadHtmlUrl: "https://ilaftvbwammedhiozylx.supabase.co/storage/v1/object/public/exocad_html/molar-teste/MOLAR%2037.html",
     type: "Unitário",
     description: "Coroa unitária em dissilicato de lítio para molar inferior, desenhada para oclusão ideal e alta resistência em região posterior.",
     category: "Odontológico"
