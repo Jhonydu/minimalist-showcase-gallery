@@ -6,6 +6,7 @@ import { projectsData } from '@/data/projectsData';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import ContactModal from '@/components/ContactModal';
+import AboutModal from '@/components/AboutModal';
 import { cn } from '@/lib/utils';
 import { toast } from '@/components/ui/sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -22,6 +23,7 @@ const Cases = () => {
     tags: false
   });
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const [modelLoading, setModelLoading] = useState(true);
   const [transitioning, setTransitioning] = useState(false);
   const [filterCategory, setFilterCategory] = useState("TODOS");
@@ -126,6 +128,14 @@ const Cases = () => {
       duration: 3000,
     });
   };
+  
+  const handleAboutOpen = () => {
+    setAboutModalOpen(true);
+    toast("QUEM SOU EU", {
+      position: "bottom-right",
+      duration: 3000,
+    });
+  };
 
   // Filter projects based on category
   const filteredThumbnails = filterCategory === "TODOS" 
@@ -133,11 +143,11 @@ const Cases = () => {
     : projectsData.filter(project => project.type?.toUpperCase() === filterCategory);
 
   return (
-    <div className="min-h-screen bg-[#e5e5e5] overflow-hidden">
+    <div className="min-h-screen bg-black overflow-hidden">
       {/* Intro Section - Absolute positioning to overlay */}
       <div 
         className={cn(
-          "fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#e5e5e5] px-6 py-12 transition-all duration-1000",
+          "fixed inset-0 z-50 flex flex-col items-center justify-center bg-black px-6 py-12 transition-all duration-1000",
           introVisible ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
       >
@@ -146,19 +156,19 @@ const Cases = () => {
             "transition-all duration-1000 transform",
             textAnimation.title ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}>
-            <h1 className="text-4xl sm:text-6xl font-bold mb-4 tracking-tight uppercase">
+            <h1 className="text-4xl sm:text-6xl font-bold mb-4 tracking-tight uppercase text-white">
               PORTFÓLIO DIGITAL ODONTOLÓGICO
             </h1>
-            <p className="text-2xl text-muted-foreground mt-2 font-light uppercase">JONHNATAS LIMA</p>
+            <p className="text-2xl text-white/60 mt-2 font-light uppercase">JONHNATAS LIMA</p>
           </div>
           
           <div className={cn(
             "space-y-6 transition-all duration-1000 delay-300 transform",
             textAnimation.subtitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}>
-            <div className="h-px w-24 bg-primary/50 mx-auto my-8"></div>
+            <div className="h-px w-24 bg-white/30 mx-auto my-8"></div>
             
-            <p className="text-xl leading-relaxed uppercase">
+            <p className="text-xl leading-relaxed uppercase text-white">
               ESPECIALISTA EM MODELAGEM 3D PARA APLICAÇÕES ODONTOLÓGICAS,
               COM FOCO EM PRECISÃO, ESTÉTICA E FUNCIONALIDADE.
             </p>
@@ -168,7 +178,7 @@ const Cases = () => {
             "transition-all duration-1000 delay-500 transform",
             textAnimation.description ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}>
-            <p className="text-lg text-muted-foreground leading-relaxed uppercase">
+            <p className="text-lg text-white/60 leading-relaxed uppercase">
               UTILIZANDO SOFTWARE EXOCAD PARA CRIAR SOLUÇÕES PERSONALIZADAS,
               DESDE PRÓTESES SOBRE IMPLANTES ATÉ RESTAURAÇÕES ESTÉTICAS COMPLEXAS.
               INTEGRAÇÃO COMPLETA COM FLUXO DE TRABALHO DIGITAL, PERMITINDO
@@ -180,11 +190,11 @@ const Cases = () => {
             "flex flex-wrap justify-center gap-4 py-6 transition-all duration-1000 delay-700 transform",
             textAnimation.tags ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}>
-            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">EXOCAD DENTALCAD</div>
-            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">CAD/CAM</div>
-            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">IMPRESSÃO 3D</div>
-            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">ZIRCÔNIA</div>
-            <div className="bg-secondary/50 px-4 py-2 text-sm font-medium uppercase">DISSILICATO</div>
+            <div className="bg-white/5 hover:bg-white/10 transition-colors px-4 py-2 text-sm font-medium uppercase text-white">EXOCAD DENTALCAD</div>
+            <div className="bg-white/5 hover:bg-white/10 transition-colors px-4 py-2 text-sm font-medium uppercase text-white">CAD/CAM</div>
+            <div className="bg-white/5 hover:bg-white/10 transition-colors px-4 py-2 text-sm font-medium uppercase text-white">IMPRESSÃO 3D</div>
+            <div className="bg-white/5 hover:bg-white/10 transition-colors px-4 py-2 text-sm font-medium uppercase text-white">ZIRCÔNIA</div>
+            <div className="bg-white/5 hover:bg-white/10 transition-colors px-4 py-2 text-sm font-medium uppercase text-white">DISSILICATO</div>
           </div>
         </div>
       </div>
@@ -208,13 +218,13 @@ const Cases = () => {
 
       {/* Loading overlay for model transitions */}
       {transitioning && (
-        <div className="fixed inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-20">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-20">
           <div className="flex flex-col items-center">
-            <svg className="animate-spin h-8 w-8 text-primary/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg className="animate-spin h-8 w-8 text-white/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <span className="mt-3 text-sm uppercase">CARREGANDO MODELO...</span>
+            <span className="mt-3 text-sm uppercase text-white">CARREGANDO MODELO...</span>
           </div>
         </div>
       )}
@@ -226,7 +236,8 @@ const Cases = () => {
       )}>
         <Header 
           openContact={handleContactOpen}
-          className="bg-transparent backdrop-blur-sm pointer-events-auto"
+          openAbout={handleAboutOpen}
+          className="bg-black/5 backdrop-blur-sm pointer-events-auto"
         />
         
         <div className="pt-24 md:pt-28 px-4 md:px-6 w-full h-[calc(100vh-6rem)] flex flex-col">
@@ -235,17 +246,17 @@ const Cases = () => {
             <>
               <button 
                 onClick={goToPreviousCase}
-                className="fixed left-2 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-black/5 hover:bg-black/10 rounded-full flex items-center justify-center pointer-events-auto transition-colors"
+                className="fixed left-2 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white/5 hover:bg-white/10 rounded-full flex items-center justify-center pointer-events-auto transition-colors"
                 aria-label="Caso anterior"
               >
-                <ChevronLeft className="h-6 w-6" />
+                <ChevronLeft className="h-6 w-6 text-white" />
               </button>
               <button 
                 onClick={goToNextCase}
-                className="fixed right-2 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-black/5 hover:bg-black/10 rounded-full flex items-center justify-center pointer-events-auto transition-colors"
+                className="fixed right-2 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white/5 hover:bg-white/10 rounded-full flex items-center justify-center pointer-events-auto transition-colors"
                 aria-label="Próximo caso"
               >
-                <ChevronRight className="h-6 w-6" />
+                <ChevronRight className="h-6 w-6 text-white" />
               </button>
             </>
           )}
@@ -267,33 +278,33 @@ const Cases = () => {
                   className="mx-auto w-full flex items-center justify-center h-10"
                   aria-label="Expandir painel de informações"
                 >
-                  <div className="bg-black/5 hover:bg-black/10 px-4 py-1 rounded-full flex items-center transition-colors">
-                    <span className="text-xs mr-1 uppercase">Informações</span>
-                    <ChevronRight className="h-3 w-3 rotate-90" />
+                  <div className="bg-white/5 hover:bg-white/10 px-4 py-1 rounded-full flex items-center transition-colors">
+                    <span className="text-xs mr-1 uppercase text-white">Informações</span>
+                    <ChevronRight className="h-3 w-3 rotate-90 text-white" />
                   </div>
                 </button>
               ) : (
                 <div className="bg-black/5 backdrop-blur-sm p-4 rounded-t-lg mx-4 animate-fade-in relative">
                   <button 
                     onClick={toggleInfoPanel}
-                    className="absolute top-2 right-2 p-1 rounded-full bg-black/5 hover:bg-black/10 transition-colors"
+                    className="absolute top-2 right-2 p-1 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
                     aria-label="Recolher painel de informações"
                   >
-                    <ChevronRight className="h-4 w-4 rotate-270" />
+                    <ChevronRight className="h-4 w-4 rotate-270 text-white" />
                   </button>
 
                   <div>
-                    <h1 className="text-base font-medium mb-2 uppercase">{currentCase.title}</h1>
-                    <p className="text-xs text-muted-foreground mb-3 uppercase">{currentCase.description}</p>
+                    <h1 className="text-base font-medium mb-2 uppercase text-white">{currentCase.title}</h1>
+                    <p className="text-xs text-white/60 mb-3 uppercase">{currentCase.description}</p>
                     
                     <div className="mb-3">
-                      <h3 className="text-xs font-medium mb-1 uppercase">TECNOLOGIAS</h3>
+                      <h3 className="text-xs font-medium mb-1 uppercase text-white/80">TECNOLOGIAS</h3>
                       <div className="flex flex-wrap gap-1">
                         {currentCase.type && (
-                          <span className="px-1.5 py-0.5 text-xs uppercase bg-black/5 rounded-sm">{currentCase.type}</span>
+                          <span className="px-1.5 py-0.5 text-xs uppercase bg-white/5 hover:bg-white/10 transition-colors rounded-sm text-white">{currentCase.type}</span>
                         )}
-                        <span className="px-1.5 py-0.5 text-xs uppercase bg-black/5 rounded-sm">EXOCAD</span>
-                        <span className="px-1.5 py-0.5 text-xs uppercase bg-black/5 rounded-sm">3D PRINT</span>
+                        <span className="px-1.5 py-0.5 text-xs uppercase bg-white/5 hover:bg-white/10 transition-colors rounded-sm text-white">EXOCAD</span>
+                        <span className="px-1.5 py-0.5 text-xs uppercase bg-white/5 hover:bg-white/10 transition-colors rounded-sm text-white">3D PRINT</span>
                       </div>
                     </div>
                     
@@ -301,10 +312,10 @@ const Cases = () => {
                       <Button 
                         variant="link"
                         size="sm"
-                        className="w-full justify-start p-0 text-xs uppercase hover:text-primary transition-colors group"
+                        className="w-full justify-start p-0 text-xs uppercase text-white/60 hover:text-white transition-colors group"
                         onClick={() => setHtmlModalOpen(true)}
                       >
-                        <ExternalLink className="mr-1 h-3 w-3 group-hover:text-primary transition-colors" />
+                        <ExternalLink className="mr-1 h-3 w-3 group-hover:text-white transition-colors" />
                         VER CASO COMPLETO (HTML)
                       </Button>
                     )}
@@ -328,30 +339,30 @@ const Cases = () => {
                   className="absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center"
                   aria-label="Expandir painel de informações"
                 >
-                  <ChevronLeft className="h-5 w-5" />
+                  <ChevronLeft className="h-5 w-5 text-white" />
                 </button>
               ) : (
-                <div className="bg-black/5 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative">
+                <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative">
                   <button 
                     onClick={toggleInfoPanel}
                     className="absolute -left-8 top-1/2 transform -translate-y-1/2 w-8 h-12 flex items-center justify-center"
                     aria-label="Recolher painel de informações"
                   >
-                    <ChevronRight className="h-5 w-5" />
+                    <ChevronRight className="h-5 w-5 text-white" />
                   </button>
 
                   <div>
-                    <h1 className="text-xl font-medium mb-4 uppercase">{currentCase.title}</h1>
-                    <p className="text-sm text-muted-foreground mb-6 uppercase">{currentCase.description}</p>
+                    <h1 className="text-xl font-medium mb-4 uppercase text-white">{currentCase.title}</h1>
+                    <p className="text-sm text-white/60 mb-6 uppercase">{currentCase.description}</p>
                     
                     <div className="mb-6">
-                      <h3 className="text-sm font-medium mb-2 uppercase">TECNOLOGIAS</h3>
+                      <h3 className="text-sm font-medium mb-2 uppercase text-white/80">TECNOLOGIAS</h3>
                       <div className="flex flex-wrap gap-2">
                         {currentCase.type && (
-                          <span className="px-2 py-1 text-xs bg-black/5 hover:bg-black/10 transition-colors rounded-sm uppercase">{currentCase.type}</span>
+                          <span className="px-2 py-1 text-xs bg-white/5 hover:bg-white/10 transition-colors rounded-sm uppercase text-white">{currentCase.type}</span>
                         )}
-                        <span className="px-2 py-1 text-xs bg-black/5 hover:bg-black/10 transition-colors rounded-sm uppercase">EXOCAD</span>
-                        <span className="px-2 py-1 text-xs bg-black/5 hover:bg-black/10 transition-colors rounded-sm uppercase">3D PRINT</span>
+                        <span className="px-2 py-1 text-xs bg-white/5 hover:bg-white/10 transition-colors rounded-sm uppercase text-white">EXOCAD</span>
+                        <span className="px-2 py-1 text-xs bg-white/5 hover:bg-white/10 transition-colors rounded-sm uppercase text-white">3D PRINT</span>
                       </div>
                     </div>
                     
@@ -359,10 +370,10 @@ const Cases = () => {
                       <Button 
                         variant="link"
                         size="sm"
-                        className="w-full justify-start mb-2 p-0 uppercase hover:text-primary transition-colors group"
+                        className="w-full justify-start mb-2 p-0 uppercase text-white/60 hover:text-white transition-colors group"
                         onClick={() => setHtmlModalOpen(true)}
                       >
-                        <ExternalLink className="mr-2 h-4 w-4 group-hover:text-primary transition-colors" />
+                        <ExternalLink className="mr-2 h-4 w-4 group-hover:text-white transition-colors" />
                         VER CASO COMPLETO (HTML)
                       </Button>
                     )}
@@ -373,7 +384,7 @@ const Cases = () => {
                         variant="link" 
                         size="sm" 
                         onClick={goToPreviousCase} 
-                        className="p-0 uppercase hover:text-primary transition-colors"
+                        className="p-0 uppercase hover:text-white text-white/60 transition-colors"
                       >
                         <ChevronLeft className="h-4 w-4 mr-1" />
                         ANTERIOR
@@ -382,7 +393,7 @@ const Cases = () => {
                         variant="link" 
                         size="sm" 
                         onClick={goToNextCase} 
-                        className="p-0 uppercase hover:text-primary transition-colors"
+                        className="p-0 uppercase hover:text-white text-white/60 transition-colors"
                       >
                         PRÓXIMO
                         <ChevronRight className="h-4 w-4 ml-1" />
@@ -397,18 +408,18 @@ const Cases = () => {
           {/* Filter Bar - Redesigned with consistent styling */}
           <div className="fixed top-24 left-6 z-10 py-3 pointer-events-auto">
             <div className="flex items-center space-x-3">
-              <Filter className="h-4 w-4 text-muted-foreground" />
+              <Filter className="h-4 w-4 text-white/60" />
               <div className="flex items-center">
                 {categories.map((category, idx) => (
                   <React.Fragment key={category}>
-                    {idx > 0 && <span className="text-muted-foreground mx-1">|</span>}
+                    {idx > 0 && <span className="text-white/30 mx-1">|</span>}
                     <button
                       onClick={() => setFilterCategory(category)}
                       className={cn(
                         "px-1 py-1 text-xs uppercase transition-colors",
                         filterCategory === category
-                          ? 'text-primary font-medium underline underline-offset-4'
-                          : 'text-muted-foreground hover:text-primary'
+                          ? 'text-white font-medium underline underline-offset-4'
+                          : 'text-white/60 hover:text-white'
                       )}
                     >
                       {category}
@@ -431,7 +442,7 @@ const Cases = () => {
                   }}
                   className={cn(
                     "transition-all duration-300 rounded-full overflow-hidden group",
-                    currentCase.id === project.id ? "ring-2 ring-primary scale-110" : "opacity-70 hover:opacity-100"
+                    currentCase.id === project.id ? "ring-2 ring-white scale-110" : "opacity-70 hover:opacity-100"
                   )}
                 >
                   <div className="relative">
@@ -457,7 +468,7 @@ const Cases = () => {
       <Dialog open={htmlModalOpen} onOpenChange={setHtmlModalOpen}>
         <DialogContent className="max-w-5xl p-0 overflow-hidden border-none bg-transparent">
           <div className="w-full h-[80vh] bg-gradient-to-br from-[#9b87f5] to-black p-6 rounded-lg">
-            <div className="w-full h-full bg-white rounded-lg overflow-hidden">
+            <div className="w-full h-full bg-black/80 rounded-lg overflow-hidden">
               {currentCase.htmlContent && (
                 <div 
                   className="w-full h-full overflow-auto p-4 styled-html-content"
@@ -474,65 +485,71 @@ const Cases = () => {
         isOpen={contactModalOpen} 
         onClose={() => setContactModalOpen(false)} 
       />
+      
+      {/* About Modal */}
+      <AboutModal
+        isOpen={aboutModalOpen}
+        onClose={() => setAboutModalOpen(false)}
+      />
     </div>
   );
 };
 
 // Sample HTML content for the visualization inspired by kenyihancco.com
 const htmlContent = `
-<div style="font-family: 'Inter', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; text-transform: uppercase;">
-  <div style="margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 30px;">
+<div style="font-family: 'Inter', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; color: #fff; text-transform: uppercase; background-color: transparent;">
+  <div style="margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px;">
     <h1 style="font-size: 32px; margin-bottom: 10px; font-weight: 600;">CASO CLÍNICO: PRÓTESE SOBRE IMPLANTE</h1>
     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
-      <span style="background-color: #f3f4f6; padding: 6px 14px; font-size: 14px; font-weight: 500;">IMPLANTE</span>
-      <span style="background-color: #f3f4f6; padding: 6px 14px; font-size: 14px; font-weight: 500;">CAD/CAM</span>
-      <span style="background-color: #f3f4f6; padding: 6px 14px; font-size: 14px; font-weight: 500;">ZIRCÔNIA</span>
+      <span style="background-color: rgba(255,255,255,0.1); padding: 6px 14px; font-size: 14px; font-weight: 500;">IMPLANTE</span>
+      <span style="background-color: rgba(255,255,255,0.1); padding: 6px 14px; font-size: 14px; font-weight: 500;">CAD/CAM</span>
+      <span style="background-color: rgba(255,255,255,0.1); padding: 6px 14px; font-size: 14px; font-weight: 500;">ZIRCÔNIA</span>
     </div>
   </div>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 40px;">
     <div>
-      <img src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=800" style="width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+      <img src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=800" style="width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
     </div>
     <div>
-      <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=800" style="width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+      <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=800" style="width: 100%; height: 240px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
     </div>
   </div>
 
   <div style="margin-bottom: 40px;">
     <h2 style="font-size: 22px; margin-bottom: 16px; font-weight: 600;">DESCRIÇÃO DO CASO</h2>
-    <p style="line-height: 1.8; color: #374151; margin-bottom: 16px;">
+    <p style="line-height: 1.8; color: rgba(255,255,255,0.7); margin-bottom: 16px;">
       PACIENTE COM AUSÊNCIA DOS ELEMENTOS 14 A 16, NECESSITANDO REABILITAÇÃO PROTÉTICA SOBRE IMPLANTES. 
       FOI REALIZADO PLANEJAMENTO DIGITAL COMPLETO, UTILIZANDO ESCANEAMENTO INTRAORAL E MODELAGEM NO SOFTWARE EXOCAD.
     </p>
-    <p style="line-height: 1.8; color: #374151;">
+    <p style="line-height: 1.8; color: rgba(255,255,255,0.7);">
       APÓS O PLANEJAMENTO VIRTUAL, FOI CONFECCIONADA INFRAESTRUTURA EM ZIRCÔNIA FRESADA COM ALTA PRECISÃO,
       GARANTINDO ADAPTAÇÃO PASSIVA SOBRE OS IMPLANTES E EXCELENTE RESULTADO ESTÉTICO FINAL.
     </p>
   </div>
 
-  <div style="margin-bottom: 40px; background-color: #f9fafb; padding: 30px; border-radius: 12px;">
+  <div style="margin-bottom: 40px; background-color: rgba(255,255,255,0.05); padding: 30px; border-radius: 12px;">
     <h2 style="font-size: 22px; margin-bottom: 20px; font-weight: 600;">ESPECIFICAÇÕES TÉCNICAS</h2>
     <ul style="list-style-type: none; padding: 0; margin: 0;">
-      <li style="padding: 12px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">MATERIAL</span>
-        <span>ZIRCÔNIA MULTICAMADAS CAD/CAM</span>
+      <li style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 600; color: #fff;">MATERIAL</span>
+        <span style="color: rgba(255,255,255,0.7);">ZIRCÔNIA MULTICAMADAS CAD/CAM</span>
       </li>
-      <li style="padding: 12px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">SOFTWARE</span>
-        <span>EXOCAD DENTALCAD 3.1</span>
+      <li style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 600; color: #fff;">SOFTWARE</span>
+        <span style="color: rgba(255,255,255,0.7);">EXOCAD DENTALCAD 3.1</span>
       </li>
-      <li style="padding: 12px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">IMPLANTES</span>
-        <span>NEODENT GM 4.3 X 11.5MM</span>
+      <li style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 600; color: #fff;">IMPLANTES</span>
+        <span style="color: rgba(255,255,255,0.7);">NEODENT GM 4.3 X 11.5MM</span>
       </li>
-      <li style="padding: 12px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">CONEXÃO</span>
-        <span>INTERFACE DE TITÂNIO</span>
+      <li style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 600; color: #fff;">CONEXÃO</span>
+        <span style="color: rgba(255,255,255,0.7);">INTERFACE DE TITÂNIO</span>
       </li>
       <li style="padding: 12px 0; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 600; color: #111;">ACABAMENTO</span>
-        <span>CARACTERIZAÇÃO E GLAZE</span>
+        <span style="font-weight: 600; color: #fff;">ACABAMENTO</span>
+        <span style="color: rgba(255,255,255,0.7);">CARACTERIZAÇÃO E GLAZE</span>
       </li>
     </ul>
   </div>
@@ -540,23 +557,23 @@ const htmlContent = `
   <div>
     <h2 style="font-size: 22px; margin-bottom: 20px; font-weight: 600;">VANTAGENS DA TÉCNICA</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-      <div style="background-color: #f3f4f6; padding: 24px; border-radius: 12px; text-align: center;">
+      <div style="background-color: rgba(255,255,255,0.05); padding: 24px; border-radius: 12px; text-align: center;">
         <h3 style="font-weight: 600; margin-bottom: 8px; font-size: 18px;">PRECISÃO</h3>
-        <p style="font-size: 15px; color: #6b7280; line-height: 1.6;">ALTA ADAPTAÇÃO MARGINAL E EXCELENTE AJUSTE OCLUSAL</p>
+        <p style="font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.6;">ALTA ADAPTAÇÃO MARGINAL E EXCELENTE AJUSTE OCLUSAL</p>
       </div>
-      <div style="background-color: #f3f4f6; padding: 24px; border-radius: 12px; text-align: center;">
+      <div style="background-color: rgba(255,255,255,0.05); padding: 24px; border-radius: 12px; text-align: center;">
         <h3 style="font-weight: 600; margin-bottom: 8px; font-size: 18px;">ESTÉTICA</h3>
-        <p style="font-size: 15px; color: #6b7280; line-height: 1.6;">RESULTADO NATURAL E HARMONIOSO COM OS ELEMENTOS ADJACENTES</p>
+        <p style="font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.6;">RESULTADO NATURAL E HARMONIOSO COM OS ELEMENTOS ADJACENTES</p>
       </div>
-      <div style="background-color: #f3f4f6; padding: 24px; border-radius: 12px; text-align: center;">
+      <div style="background-color: rgba(255,255,255,0.05); padding: 24px; border-radius: 12px; text-align: center;">
         <h3 style="font-weight: 600; margin-bottom: 8px; font-size: 18px;">DURABILIDADE</h3>
-        <p style="font-size: 15px; color: #6b7280; line-height: 1.6;">MATERIAL DE ALTA RESISTÊNCIA PARA FUNÇÃO PROLONGADA</p>
+        <p style="font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.6;">MATERIAL DE ALTA RESISTÊNCIA PARA FUNÇÃO PROLONGADA</p>
       </div>
     </div>
   </div>
   
-  <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eee; text-align: center;">
-    <p style="color: #6b7280; font-size: 14px;">© 2025 PORTFÓLIO DIGITAL ODONTOLÓGICO | JONHNATAS LIMA</p>
+  <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+    <p style="color: rgba(255,255,255,0.5); font-size: 14px;">© 2025 PORTFÓLIO DIGITAL ODONTOLÓGICO | JONHNATAS LIMA</p>
   </div>
 </div>
 `;
