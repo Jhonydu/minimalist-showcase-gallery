@@ -10,6 +10,7 @@ export interface Project {
   thumbnail: string;
   modelUrl: string;
   htmlContent: string;
+  exocadHtmlUrl?: string; // Added this property
   type: string;
   description: string;
   category?: string;
