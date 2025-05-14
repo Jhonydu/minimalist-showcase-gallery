@@ -8,8 +8,9 @@ import AboutModal from '@/components/AboutModal';
 import { cn } from '@/lib/utils';
 import { toast } from '@/components/ui/sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Import the new components
+// Import the components
 import IntroSection from '@/components/cases/IntroSection';
 import ModelViewer from '@/components/cases/ModelViewer';
 import FilterBar from '@/components/cases/FilterBar';
@@ -51,10 +52,10 @@ const Cases = () => {
     const descriptionTimer = setTimeout(() => setTextAnimation(prev => ({ ...prev, description: true })), 3200);
     const tagsTimer = setTimeout(() => setTextAnimation(prev => ({ ...prev, tags: true })), 5000);
     
-    // Hide intro after 10 seconds
+    // Hide intro after 15 seconds instead of 10
     const introTimer = setTimeout(() => {
       setIntroVisible(false);
-    }, 10000);
+    }, 15000);
     
     return () => {
       clearTimeout(titleTimer);
@@ -75,6 +76,11 @@ const Cases = () => {
       setTransitioning(false);
       setModelLoading(false);
     }, 800);
+  };
+
+  // Skip intro and go straight to model view
+  const skipIntro = () => {
+    setIntroVisible(false);
   };
 
   // Effect to handle filter category changes
@@ -138,20 +144,24 @@ const Cases = () => {
 
   return (
     <div className="min-h-screen bg-black overflow-hidden">
-      {/* Intro Section */}
+      {/* Intro Section - updated with modelLoaded prop and onSkipIntro callback */}
       <IntroSection 
         introVisible={introVisible} 
-        textAnimation={textAnimation} 
+        textAnimation={textAnimation}
+        onSkipIntro={skipIntro}
+        modelLoaded={!modelLoading} 
       />
 
-      {/* 3D Model Viewer */}
-      <ModelViewer
-        modelUrl={currentCase.modelUrl}
-        title={currentCase.title}
-        modelLoading={modelLoading}
-        transitioning={transitioning}
-        onLoad={handleModelLoad}
-      />
+      {/* 3D Model Viewer - not showing in intro anymore */}
+      {!introVisible && (
+        <ModelViewer
+          modelUrl={currentCase.modelUrl}
+          title={currentCase.title}
+          modelLoading={modelLoading}
+          transitioning={transitioning}
+          onLoad={handleModelLoad}
+        />
+      )}
 
       {/* Content layout */}
       <div className={cn(
@@ -187,7 +197,30 @@ const Cases = () => {
             onSelectCategory={setFilterCategory}
           />
           
-          {/* Thumbnail Carousel with Navigation Buttons */}
+          {/* Navigation buttons outside the gallery */}
+          <div className="relative w-full mb-4 pointer-events-auto">
+            <div className="flex justify-between items-center">
+              {/* Previous button */}
+              <button 
+                onClick={goToPreviousCase}
+                className="w-14 h-14 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 transition-colors text-white z-10 backdrop-blur-sm"
+                aria-label="Caso anterior"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+              
+              {/* Next button */}
+              <button 
+                onClick={goToNextCase}
+                className="w-14 h-14 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 transition-colors text-white z-10 backdrop-blur-sm"
+                aria-label="Próximo caso"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+            </div>
+          </div>
+          
+          {/* Thumbnail Carousel */}
           <ThumbnailCarousel
             projects={filteredThumbnails}
             currentProjectId={currentCase.id}

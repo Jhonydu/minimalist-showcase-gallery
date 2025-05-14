@@ -19,6 +19,18 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   
   if (!project) return null;
 
+  // Process the Exocad URL to ensure proper HTML rendering
+  const getProcessedExocadUrl = (url?: string) => {
+    if (!url) return '';
+    
+    // Add content_type parameter to ensure HTML rendering
+    if (url.includes('?')) {
+      return `${url}&content_type=text/html`;
+    }
+    
+    return `${url}?content_type=text/html`;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0 bg-gradient-to-br from-[#9b87f5]/90 to-black/95 border-none">
@@ -67,7 +79,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                           </Button>
                           <div className="w-full h-[300px] bg-gray-900 rounded-md">
                             <iframe
-                              src={project.exocadHtmlUrl}
+                              src={getProcessedExocadUrl(project.exocadHtmlUrl)}
                               className="w-full h-full border-none rounded-md"
                               title="Exocad Preview"
                             ></iframe>

@@ -112,7 +112,7 @@ const InfoPanel = ({
         <div
           className="flex items-center bg-black/20 backdrop-blur-sm rounded-full"
         >
-          <h2 className="text-xl font-medium text-white ml-4 uppercase">{title}</h2>
+          <h2 className="text-2xl font-medium text-white ml-4 uppercase">{title}</h2>
           <button 
             onClick={onToggleInfoPanel}
             className="ml-4 w-12 h-12 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm hover:bg-black/30 transition-colors"

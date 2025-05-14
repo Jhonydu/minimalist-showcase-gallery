@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -26,6 +25,19 @@ const HtmlContentModal = ({ isOpen, onOpenChange, htmlContent, exocadHtmlUrl }: 
 
   const handleIframeLoad = () => {
     setIsIframeLoading(false);
+  };
+
+  // Process the Exocad URL to ensure proper HTML rendering
+  const getProcessedExocadUrl = () => {
+    if (!exocadHtmlUrl) return '';
+    
+    // If the URL already has a query parameter, add content_type=text/html
+    if (exocadHtmlUrl.includes('?')) {
+      return `${exocadHtmlUrl}&content_type=text/html`;
+    }
+    
+    // Otherwise, add the query parameter with a question mark
+    return `${exocadHtmlUrl}?content_type=text/html`;
   };
 
   return (
@@ -69,7 +81,7 @@ const HtmlContentModal = ({ isOpen, onOpenChange, htmlContent, exocadHtmlUrl }: 
                     </div>
                   )}
                   <iframe
-                    src={exocadHtmlUrl}
+                    src={getProcessedExocadUrl()}
                     className="w-full h-full border-none"
                     onLoad={handleIframeLoad}
                     title="Exocad 3D Viewer"

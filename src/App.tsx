@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Cases from "./pages/Cases";
 import NotFound from "./pages/NotFound";
+import Index from "./pages/Index";
 import React from 'react'; // Add React import explicitly
 
 // Create a new QueryClient instance
@@ -21,6 +22,7 @@ const App: React.FC = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Cases />} />
+            <Route path="/gallery" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
