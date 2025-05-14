@@ -53,6 +53,7 @@ const ModelViewer = ({ modelUrl, title, modelLoading, transitioning, onLoad }: M
           "fixed inset-0 w-full h-full overflow-hidden pointer-events-auto transition-opacity duration-700",
           (modelLoading || fadingOut) ? "opacity-0" : "opacity-100"
         )}
+        style={{ zIndex: 10 }} // Ensure this is below the intro section, but visible when intro is hidden
       >
         <iframe
           ref={iframeRef}

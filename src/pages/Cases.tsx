@@ -51,7 +51,7 @@ const Cases = () => {
     const descriptionTimer = setTimeout(() => setTextAnimation(prev => ({ ...prev, description: true })), 3200);
     const tagsTimer = setTimeout(() => setTextAnimation(prev => ({ ...prev, tags: true })), 5000);
     
-    // Hide intro after 10 seconds - reduced from 15
+    // Hide intro after 10 seconds
     const introTimer = setTimeout(() => {
       if (!modelLoading) {
         setIntroVisible(false);

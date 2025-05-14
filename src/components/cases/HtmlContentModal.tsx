@@ -4,6 +4,8 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { DialogTitle } from '@/components/ui/dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface HtmlContentModalProps {
   isOpen: boolean;
@@ -42,12 +44,17 @@ const HtmlContentModal = ({ isOpen, onOpenChange, htmlContent, exocadHtmlUrl }: 
 
   // Create a direct link for opening in a new tab as a fallback
   const getExternalLink = () => {
-    return exocadHtmlUrl || '';
+    return exocadHtmlUrl ? getProcessedExocadUrl() : '';
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl p-0 overflow-hidden border-none bg-transparent">
+        {/* Add a hidden DialogTitle for accessibility */}
+        <VisuallyHidden>
+          <DialogTitle>Visualização do Caso</DialogTitle>
+        </VisuallyHidden>
+        
         <div className="w-full h-[80vh] bg-gradient-to-br from-[#1a1a1a] to-black p-6 rounded-lg relative">
           <Button 
             variant="ghost" 
