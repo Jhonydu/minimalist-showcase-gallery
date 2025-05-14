@@ -47,19 +47,16 @@ const IntroSection = ({ introVisible, textAnimation, onSkipIntro, modelLoaded }:
     return () => clearInterval(animationInterval);
   }, [introVisible]);
 
-  // Show skip button after 3 seconds instead of immediately when model is loaded
+  // Show skip button only after model is loaded (10 seconds)
   useEffect(() => {
-    if (introVisible) {
-      // Only show skip button after 3 seconds
+    if (modelLoaded && introVisible) {
       const timer = setTimeout(() => {
         setShowSkipButton(true);
-      }, 3000);
+      }, 10000);
       
       return () => clearTimeout(timer);
-    } else {
-      setShowSkipButton(false);
     }
-  }, [introVisible, modelLoaded]);
+  }, [modelLoaded, introVisible]);
 
   // Categories for dental work
   const dentalServices = [
@@ -101,9 +98,9 @@ const IntroSection = ({ introVisible, textAnimation, onSkipIntro, modelLoaded }:
       ))}
 
       {/* Glow effects */}
-      <div className="absolute w-[500px] h-[500px] bg-gradient-to-r from-white/5 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-10 left-10 w-[300px] h-[300px] bg-gradient-to-r from-white/3 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute top-20 right-10 w-[250px] h-[250px] bg-gradient-to-r from-white/3 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute w-[500px] h-[500px] bg-gradient-to-r from-purple-500/10 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-10 left-10 w-[300px] h-[300px] bg-gradient-to-r from-blue-500/5 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute top-20 right-10 w-[250px] h-[250px] bg-gradient-to-r from-purple-500/5 to-transparent rounded-full blur-3xl"></div>
       
       {/* Content */}
       <div className="max-w-5xl mx-auto text-center space-y-8 relative z-10">
@@ -125,28 +122,28 @@ const IntroSection = ({ introVisible, textAnimation, onSkipIntro, modelLoaded }:
           
           <p className="text-xl leading-relaxed uppercase text-white">
             ESPECIALISTA EM MODELAGEM 3D PARA APLICAÇÕES ODONTOLÓGICAS,
-            <span className="relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-white after:origin-bottom-right after:transition-transform after:duration-1000 after:animate-[scale-x-100_2s_ease-in-out_forwards]">
+            <span className="relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-1000 after:animate-[scale-x-100_2s_ease-in-out_forwards]">
               <span className="relative z-10"> FOCO EM PRECISÃO, ESTÉTICA E FUNCIONALIDADE.</span>
             </span>
           </p>
         </div>
         
-        {/* Service categories - with enhanced styling and larger boxes */}
+        {/* Service categories - displayed in a grid with animations */}
         <div className={cn(
           "transition-all duration-1000 delay-700 transform mt-12",
           textAnimation.tags ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 py-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 py-6">
             {dentalServices.map((service, index) => (
               <div 
                 key={service}
-                className="bg-white/10 hover:bg-white/15 transition-all duration-500 px-4 py-6 text-sm md:text-base font-medium uppercase text-white relative overflow-hidden group hover:scale-105 rounded-md backdrop-blur-sm"
+                className="bg-white/10 hover:bg-white/15 transition-all duration-500 px-3 py-4 text-sm font-medium uppercase text-white relative overflow-hidden group hover:scale-105 rounded-md backdrop-blur-sm"
                 style={{ 
                   animationDelay: `${index * 100}ms`,
                   animation: 'fadeInUp 0.6s ease-out forwards'
                 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10">{service}</div>
                 <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-white/40 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
               </div>
@@ -154,18 +151,18 @@ const IntroSection = ({ introVisible, textAnimation, onSkipIntro, modelLoaded }:
           </div>
         </div>
 
-        {/* Animated skip button - with smoother animation */}
+        {/* Animated skip button - only shows after model loaded */}
         {showSkipButton && (
           <div 
             className={cn(
-              "fixed bottom-10 left-1/2 transform -translate-x-1/2 transition-all duration-1000 cursor-pointer",
+              "fixed bottom-10 left-1/2 transform -translate-x-1/2 transition-all duration-700 cursor-pointer",
               showSkipButton ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             onClick={onSkipIntro}
           >
             <div className="flex flex-col items-center space-y-2 group">
-              <span className="text-white/60 text-sm font-medium uppercase group-hover:text-white transition-colors duration-500">Pular introdução</span>
-              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 group-hover:bg-white/20 transition-all duration-700 animate-[bounce_3s_ease-in-out_infinite]">
+              <span className="text-white/60 text-sm font-medium uppercase group-hover:text-white transition-colors">Pular introdução</span>
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 group-hover:bg-white/20 transition-all duration-300 animate-bounce">
                 <ChevronDown className="w-5 h-5 text-white" />
               </div>
             </div>

@@ -1,5 +1,5 @@
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 interface ModelViewerProps {
@@ -12,14 +12,10 @@ interface ModelViewerProps {
 
 const ModelViewer = ({ modelUrl, title, modelLoading, transitioning, onLoad }: ModelViewerProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [fadingOut, setFadingOut] = useState(false);
 
   useEffect(() => {
     const handleIframeLoad = () => {
-      // Delay onLoad call slightly to ensure model is rendered
-      setTimeout(() => {
-        onLoad();
-      }, 500);
+      onLoad();
     };
 
     const iframe = iframeRef.current;
@@ -34,26 +30,13 @@ const ModelViewer = ({ modelUrl, title, modelLoading, transitioning, onLoad }: M
     };
   }, [onLoad]);
 
-  // Create smoother transition effect when switching models
-  useEffect(() => {
-    if (transitioning) {
-      setFadingOut(true);
-    } else {
-      const timer = setTimeout(() => {
-        setFadingOut(false);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [transitioning]);
-
   return (
     <>
       <div 
         className={cn(
           "fixed inset-0 w-full h-full overflow-hidden pointer-events-auto transition-opacity duration-700",
-          (modelLoading || fadingOut) ? "opacity-0" : "opacity-100"
+          (modelLoading || transitioning) ? "opacity-0" : "opacity-100"
         )}
-        style={{ zIndex: 10 }} // Ensure this is below the intro section, but visible when intro is hidden
       >
         <iframe
           ref={iframeRef}
@@ -66,11 +49,13 @@ const ModelViewer = ({ modelUrl, title, modelLoading, transitioning, onLoad }: M
       </div>
 
       {transitioning && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-20">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-20">
           <div className="flex flex-col items-center">
-            <div className="relative w-16 h-16">
-              <div className="absolute inset-0 rounded-full border-2 border-white/10 border-t-white/60 animate-spin"></div>
-            </div>
+            <svg className="animate-spin h-8 w-8 text-white/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span className="mt-3 text-sm uppercase text-white">CARREGANDO MODELO...</span>
           </div>
         </div>
       )}

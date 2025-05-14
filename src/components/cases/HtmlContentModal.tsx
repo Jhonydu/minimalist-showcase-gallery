@@ -1,11 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { DialogTitle } from '@/components/ui/dialog';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface HtmlContentModalProps {
   isOpen: boolean;
@@ -34,28 +31,19 @@ const HtmlContentModal = ({ isOpen, onOpenChange, htmlContent, exocadHtmlUrl }: 
   const getProcessedExocadUrl = () => {
     if (!exocadHtmlUrl) return '';
     
-    // Always force content_type=text/html and add X-Frame-Options header if possible
+    // If the URL already has a query parameter, add content_type=text/html
     if (exocadHtmlUrl.includes('?')) {
       return `${exocadHtmlUrl}&content_type=text/html`;
     }
     
+    // Otherwise, add the query parameter with a question mark
     return `${exocadHtmlUrl}?content_type=text/html`;
-  };
-
-  // Create a direct link for opening in a new tab as a fallback
-  const getExternalLink = () => {
-    return exocadHtmlUrl ? getProcessedExocadUrl() : '';
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl p-0 overflow-hidden border-none bg-transparent">
-        {/* Add a hidden DialogTitle for accessibility */}
-        <VisuallyHidden>
-          <DialogTitle>Visualização do Caso</DialogTitle>
-        </VisuallyHidden>
-        
-        <div className="w-full h-[80vh] bg-gradient-to-br from-[#1a1a1a] to-black p-6 rounded-lg relative">
+        <div className="w-full h-[80vh] bg-gradient-to-br from-[#9b87f5] to-black p-6 rounded-lg relative">
           <Button 
             variant="ghost" 
             size="icon" 
@@ -92,7 +80,6 @@ const HtmlContentModal = ({ isOpen, onOpenChange, htmlContent, exocadHtmlUrl }: 
                       </div>
                     </div>
                   )}
-                  
                   <iframe
                     src={getProcessedExocadUrl()}
                     className="w-full h-full border-none"
@@ -101,18 +88,6 @@ const HtmlContentModal = ({ isOpen, onOpenChange, htmlContent, exocadHtmlUrl }: 
                     sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                     allow="autoplay; fullscreen"
                   />
-                  
-                  {/* Fallback option to open in a new tab */}
-                  <div className="absolute bottom-4 right-4 z-10">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      className="bg-white/10 hover:bg-white/20 text-white border-white/20"
-                      onClick={() => window.open(getExternalLink(), '_blank')}
-                    >
-                      Abrir em nova aba
-                    </Button>
-                  </div>
                 </div>
               </TabsContent>
             )}
