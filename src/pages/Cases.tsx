@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ExternalLink, ChevronRight as CollapseIcon, Filter } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, ChevronUp, ChevronDown, Filter } from 'lucide-react';
 import Header from '@/components/Header';
 import { projectsData } from '@/data/projectsData';
 import { Button } from '@/components/ui/button';
@@ -199,7 +198,7 @@ const Cases = () => {
         </div>
       </div>
 
-      {/* 3D viewer as background that covers the entire screen with pointer-events-auto */}
+      {/* 3D viewer as background */}
       <div 
         className={cn(
           "fixed inset-0 w-full h-full overflow-hidden pointer-events-auto transition-opacity duration-700",
@@ -216,7 +215,7 @@ const Cases = () => {
         />
       </div>
 
-      {/* Loading overlay for model transitions */}
+      {/* Loading overlay */}
       {transitioning && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-20">
           <div className="flex flex-col items-center">
@@ -261,7 +260,7 @@ const Cases = () => {
             </>
           )}
           
-          {/* Collapsible Info panel - Redesigned with lower opacity */}
+          {/* Collapsible Info panel - FIXED positioning for consistent collapse/expand buttons */}
           {isMobile ? (
             // Mobile info panel - Starts from bottom
             <div 
@@ -280,7 +279,7 @@ const Cases = () => {
                 >
                   <div className="bg-white/5 hover:bg-white/10 px-4 py-1 rounded-full flex items-center transition-colors">
                     <span className="text-xs mr-1 uppercase text-white">Informações</span>
-                    <ChevronRight className="h-3 w-3 rotate-90 text-white" />
+                    <ChevronUp className="h-3 w-3 text-white" />
                   </div>
                 </button>
               ) : (
@@ -290,7 +289,7 @@ const Cases = () => {
                     className="absolute top-2 right-2 p-1 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
                     aria-label="Recolher painel de informações"
                   >
-                    <ChevronRight className="h-4 w-4 rotate-270 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white" />
                   </button>
 
                   <div>
@@ -324,28 +323,28 @@ const Cases = () => {
               )}
             </div>
           ) : (
-            // Desktop info panel
+            // Desktop info panel - FIXED positioning for consistent collapse/expand buttons
             <div 
               className={cn(
-                "transition-all duration-300 pointer-events-auto",
+                "absolute top-28 right-6 transition-all duration-300 pointer-events-auto",
                 infoPanelCollapsed 
-                  ? "ml-auto w-12" 
-                  : "ml-auto w-full md:w-1/4 lg:w-1/5"
+                  ? "w-12 h-12" 
+                  : "w-full md:w-1/4 lg:w-1/5"
               )}
             >
               {infoPanelCollapsed ? (
                 <button 
                   onClick={toggleInfoPanel}
-                  className="absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center"
+                  className="absolute right-0 top-0 w-12 h-12 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm hover:bg-black/30 transition-colors"
                   aria-label="Expandir painel de informações"
                 >
                   <ChevronLeft className="h-5 w-5 text-white" />
                 </button>
               ) : (
-                <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative">
+                <div className="bg-black/20 backdrop-blur-sm p-6 rounded-lg animate-fade-in relative">
                   <button 
                     onClick={toggleInfoPanel}
-                    className="absolute -left-8 top-1/2 transform -translate-y-1/2 w-8 h-12 flex items-center justify-center"
+                    className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
                     aria-label="Recolher painel de informações"
                   >
                     <ChevronRight className="h-5 w-5 text-white" />
