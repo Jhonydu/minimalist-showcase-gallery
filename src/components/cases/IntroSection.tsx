@@ -47,16 +47,16 @@ const IntroSection = ({ introVisible, textAnimation, onSkipIntro, modelLoaded }:
     return () => clearInterval(animationInterval);
   }, [introVisible]);
 
-  // Show skip button only after model is loaded (10 seconds)
+  // Show skip button only after categories have been displayed (after 3 seconds)
   useEffect(() => {
-    if (modelLoaded && introVisible) {
+    if (textAnimation.tags && introVisible) {
       const timer = setTimeout(() => {
         setShowSkipButton(true);
-      }, 10000);
+      }, 3000);
       
       return () => clearTimeout(timer);
     }
-  }, [modelLoaded, introVisible]);
+  }, [textAnimation.tags, introVisible]);
 
   // Categories for dental work
   const dentalServices = [
@@ -151,18 +151,18 @@ const IntroSection = ({ introVisible, textAnimation, onSkipIntro, modelLoaded }:
           </div>
         </div>
 
-        {/* Animated skip button - only shows after model loaded */}
+        {/* Animated skip button - only shows after categories are displayed (3 seconds) */}
         {showSkipButton && (
           <div 
             className={cn(
-              "fixed bottom-10 left-1/2 transform -translate-x-1/2 transition-all duration-700 cursor-pointer",
+              "fixed bottom-10 left-1/2 transform -translate-x-1/2 transition-all duration-1200 cursor-pointer",
               showSkipButton ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             onClick={onSkipIntro}
           >
             <div className="flex flex-col items-center space-y-2 group">
               <span className="text-white/60 text-sm font-medium uppercase group-hover:text-white transition-colors">Pular introdução</span>
-              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 group-hover:bg-white/20 transition-all duration-300 animate-bounce">
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 group-hover:bg-white/20 transition-all duration-700 animate-bounce animate-duration-2000">
                 <ChevronDown className="w-5 h-5 text-white" />
               </div>
             </div>
