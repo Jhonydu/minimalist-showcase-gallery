@@ -6,6 +6,7 @@ import InfoPanel from '@/components/cases/InfoPanel';
 import FilterBar from '@/components/cases/FilterBar';
 import ThumbnailCarousel from '@/components/cases/ThumbnailCarousel';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { projectsData } from '@/data/projectsData';
 
 interface CasesContentProps {
   introVisible: boolean;
@@ -81,8 +82,8 @@ const CasesContent: React.FC<CasesContentProps> = ({
           projects={filteredThumbnails}
           currentProjectId={currentCase.id}
           onSelectProject={(idx) => {
-            const projectIndex = projectsData.findIndex(p => p.id === filteredThumbnails[idx].id);
-            onSelectProject(projectIndex);
+            // Fix: Use filteredThumbnails index instead of referencing projectsData
+            onSelectProject(idx);
           }}
           onNavigateNext={goToNextCase}
           onNavigatePrevious={goToPreviousCase}
