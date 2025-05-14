@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import ProjectGallery from '@/components/ProjectGallery';
 import ProjectModal from '@/components/ProjectModal';
 import ContactModal from '@/components/ContactModal';
+import AboutModal from '@/components/AboutModal';
 import { projectsData } from '@/data/projectsData';
 import { Project } from '@/components/ProjectGallery';
 import { toast } from '@/components/ui/sonner';
@@ -13,6 +14,7 @@ const Index = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [aboutModalOpen, setAboutModalOpen] = useState(false);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -47,10 +49,19 @@ const Index = () => {
     });
   };
 
+  const handleAboutOpen = () => {
+    setAboutModalOpen(true);
+    toast("Visualizando quem sou eu", {
+      position: "bottom-right",
+      duration: 3000,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header 
-        openContact={handleContactOpen} 
+        openContact={handleContactOpen}
+        openAbout={handleAboutOpen}
       />
       
       <main className="min-h-screen">
@@ -70,6 +81,11 @@ const Index = () => {
       <ContactModal 
         isOpen={contactModalOpen} 
         onClose={() => setContactModalOpen(false)} 
+      />
+
+      <AboutModal
+        isOpen={aboutModalOpen}
+        onClose={() => setAboutModalOpen(false)}
       />
     </div>
   );
