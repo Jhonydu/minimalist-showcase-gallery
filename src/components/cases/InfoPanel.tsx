@@ -9,6 +9,7 @@ interface ProjectInfoProps {
   description: string;
   type?: string;
   htmlContent?: string;
+  exocadHtmlUrl?: string;
   infoPanelCollapsed: boolean;
   onToggleInfoPanel: () => void;
   onShowHtmlModal: () => void;
@@ -22,6 +23,7 @@ const InfoPanel = ({
   description,
   type,
   htmlContent,
+  exocadHtmlUrl,
   infoPanelCollapsed,
   onToggleInfoPanel,
   onShowHtmlModal,
@@ -29,6 +31,8 @@ const InfoPanel = ({
   onNavigatePrevious,
   isMobile
 }: ProjectInfoProps) => {
+
+  const hasContent = htmlContent || exocadHtmlUrl;
 
   if (isMobile) {
     return (
@@ -76,7 +80,7 @@ const InfoPanel = ({
                 </div>
               </div>
               
-              {htmlContent && (
+              {hasContent && (
                 <Button 
                   variant="link"
                   size="sm"
@@ -84,7 +88,7 @@ const InfoPanel = ({
                   onClick={onShowHtmlModal}
                 >
                   <ExternalLink className="mr-1 h-3 w-3 group-hover:text-white transition-colors" />
-                  VER CASO COMPLETO (HTML)
+                  {exocadHtmlUrl ? 'VER EXOCAD 3D (HTML)' : 'VER CASO COMPLETO (HTML)'}
                 </Button>
               )}
             </div>
@@ -137,7 +141,7 @@ const InfoPanel = ({
               </div>
             </div>
             
-            {htmlContent && (
+            {hasContent && (
               <Button 
                 variant="link"
                 size="sm"
@@ -145,7 +149,7 @@ const InfoPanel = ({
                 onClick={onShowHtmlModal}
               >
                 <ExternalLink className="mr-2 h-4 w-4 group-hover:text-white transition-colors" />
-                VER CASO COMPLETO (HTML)
+                {exocadHtmlUrl ? 'VER EXOCAD 3D (HTML)' : 'VER CASO COMPLETO (HTML)'}
               </Button>
             )}
             

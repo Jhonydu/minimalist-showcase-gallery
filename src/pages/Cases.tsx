@@ -274,6 +274,7 @@ const Cases = () => {
             description={currentCase.description}
             type={currentCase.type}
             htmlContent={currentCase.htmlContent}
+            exocadHtmlUrl={currentCase.exocadHtmlUrl}
             infoPanelCollapsed={infoPanelCollapsed}
             onToggleInfoPanel={toggleInfoPanel}
             onShowHtmlModal={() => setHtmlModalOpen(true)}
@@ -306,6 +307,7 @@ const Cases = () => {
         isOpen={htmlModalOpen}
         onOpenChange={setHtmlModalOpen}
         htmlContent={currentCase.htmlContent || htmlContent}
+        exocadHtmlUrl={currentCase.exocadHtmlUrl}
       />
 
       {/* Contact Modal */}

@@ -1,11 +1,12 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X, ExternalLink } from 'lucide-react';
 import { Project } from './ProjectGallery';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import HtmlContentModal from './cases/HtmlContentModal';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -14,6 +15,8 @@ interface ProjectModalProps {
 }
 
 const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
+  const [htmlModalOpen, setHtmlModalOpen] = useState(false);
+  
   if (!project) return null;
 
   return (
@@ -44,7 +47,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                 ></iframe>
               </div>
               
-              {project.htmlContent && (
+              {(project.htmlContent || project.exocadHtmlUrl) && (
                 <div className="mt-6">
                   <div className="flex justify-between items-center mb-4">
                     <h4 className="text-sm font-medium text-white">Visualização interativa do projeto</h4>
@@ -52,10 +55,40 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                   
                   <Card className="border-0 overflow-hidden bg-white/10 backdrop-blur-sm">
                     <CardContent className="p-0">
-                      <div 
-                        className="w-full h-[300px] overflow-auto bg-white rounded-md"
-                        dangerouslySetInnerHTML={{ __html: project.htmlContent }}
-                      ></div>
+                      {project.exocadHtmlUrl ? (
+                        <div className="w-full h-[300px] relative">
+                          <Button 
+                            variant="secondary" 
+                            className="absolute top-2 right-2 z-10 bg-white/80 text-black hover:bg-white"
+                            onClick={() => setHtmlModalOpen(true)}
+                          >
+                            <ExternalLink className="h-4 w-4 mr-1" />
+                            Abrir Visualização Completa
+                          </Button>
+                          <div className="w-full h-[300px] bg-gray-900 rounded-md">
+                            <iframe
+                              src={project.exocadHtmlUrl}
+                              className="w-full h-full border-none rounded-md"
+                              title="Exocad Preview"
+                            ></iframe>
+                          </div>
+                        </div>
+                      ) : project.htmlContent ? (
+                        <div className="w-full h-[300px] overflow-auto bg-white rounded-md">
+                          <Button 
+                            variant="secondary" 
+                            className="absolute top-2 right-2 z-10 bg-white/80 text-black hover:bg-white"
+                            onClick={() => setHtmlModalOpen(true)}
+                          >
+                            <ExternalLink className="h-4 w-4 mr-1" />
+                            Abrir Visualização Completa
+                          </Button>
+                          <div
+                            className="w-full h-full overflow-auto p-4"
+                            dangerouslySetInnerHTML={{ __html: project.htmlContent }}
+                          ></div>
+                        </div>
+                      ) : null}
                     </CardContent>
                   </Card>
                 </div>
@@ -89,6 +122,14 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
           </div>
         </div>
       </DialogContent>
+      
+      {/* HTML Content Modal for full-screen viewing */}
+      <HtmlContentModal
+        isOpen={htmlModalOpen}
+        onOpenChange={setHtmlModalOpen}
+        htmlContent={project.htmlContent || ""}
+        exocadHtmlUrl={project.exocadHtmlUrl}
+      />
     </Dialog>
   );
 };
