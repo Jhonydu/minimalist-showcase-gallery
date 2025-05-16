@@ -16,6 +16,31 @@ const ModelViewer = ({ modelUrl, title, modelLoading, transitioning, onLoad }: M
   useEffect(() => {
     const handleIframeLoad = () => {
       onLoad();
+      
+      // Apply custom styling to the Sketchfab iframe to make the model smaller
+      setTimeout(() => {
+        if (iframeRef.current) {
+          try {
+            const iframe = iframeRef.current;
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+            
+            if (iframeDoc) {
+              // Create a style element to inject custom CSS
+              const style = iframeDoc.createElement('style');
+              style.textContent = `
+                .model-container { 
+                  transform: scale(0.75) !important; 
+                }
+              `;
+              iframeDoc.head.appendChild(style);
+              
+              console.log("Applied custom styling to Sketchfab iframe");
+            }
+          } catch (err) {
+            console.error("Error applying custom styles to iframe:", err);
+          }
+        }
+      }, 2000); // Delay to ensure the iframe content is loaded
     };
 
     const iframe = iframeRef.current;
@@ -30,6 +55,33 @@ const ModelViewer = ({ modelUrl, title, modelLoading, transitioning, onLoad }: M
     };
   }, [onLoad]);
 
+  // Construct Sketchfab URL with parameters to hide UI elements
+  const getSketchfabUrl = (url: string) => {
+    // Base parameters
+    const params = new URLSearchParams({
+      autospin: "1",
+      autostart: "1",
+      ui_controls: "0", // Hide controls 
+      ui_infos: "0",    // Hide info button
+      ui_inspector: "0", // Hide inspector
+      ui_watermark: "0", // Hide watermark
+      ui_ar: "0",       // Hide AR button
+      ui_help: "0",     // Hide help button
+      ui_settings: "0", // Hide settings
+      ui_vr: "0",       // Hide VR button
+      ui_fullscreen: "0", // Hide fullscreen button
+      ui_annotations: "0", // Hide annotations
+      transparent: "1"
+    });
+    
+    // Check if URL already has parameters
+    if (url.includes('?')) {
+      return `${url}&${params.toString()}`;
+    }
+    
+    return `${url}?${params.toString()}`;
+  };
+
   return (
     <>
       <div 
@@ -41,7 +93,7 @@ const ModelViewer = ({ modelUrl, title, modelLoading, transitioning, onLoad }: M
         <iframe
           ref={iframeRef}
           title={`3D MODEL - ${title.toUpperCase()}`}
-          src={`${modelUrl}?autospin=1&autostart=1&ui_controls=1&ui_infos=0&transparent=1`}
+          src={getSketchfabUrl(modelUrl)}
           className="w-full h-full scale-110"
           frameBorder="0"
           allow="autoplay; fullscreen; xr-spatial-tracking"

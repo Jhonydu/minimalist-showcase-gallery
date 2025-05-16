@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X, ExternalLink } from 'lucide-react';
 import { Project } from './ProjectGallery';
@@ -16,6 +16,36 @@ interface ProjectModalProps {
 
 const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   const [htmlModalOpen, setHtmlModalOpen] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  
+  useEffect(() => {
+    if (isOpen && project) {
+      // Apply custom styling to the Sketchfab iframe to make the model smaller
+      setTimeout(() => {
+        if (iframeRef.current) {
+          try {
+            const iframe = iframeRef.current;
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+            
+            if (iframeDoc) {
+              // Create a style element to inject custom CSS
+              const style = iframeDoc.createElement('style');
+              style.textContent = `
+                .model-container { 
+                  transform: scale(0.75) !important; 
+                }
+              `;
+              iframeDoc.head.appendChild(style);
+              
+              console.log("Applied custom styling to Sketchfab iframe in modal");
+            }
+          } catch (err) {
+            console.error("Error applying custom styles to iframe in modal:", err);
+          }
+        }
+      }, 2000); // Delay to ensure the iframe content is loaded
+    }
+  }, [isOpen, project]);
   
   if (!project) return null;
 
@@ -29,6 +59,32 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
     }
     
     return `${url}?content_type=text/html`;
+  };
+
+  // Construct Sketchfab URL with parameters to hide UI elements
+  const getSketchfabUrl = (url: string) => {
+    // Base parameters
+    const params = new URLSearchParams({
+      autostart: "1",
+      ui_controls: "0", // Hide controls
+      ui_infos: "0",    // Hide info button
+      ui_inspector: "0", // Hide inspector
+      ui_watermark: "0", // Hide watermark
+      ui_ar: "0",       // Hide AR button
+      ui_help: "0",     // Hide help button
+      ui_settings: "0", // Hide settings
+      ui_vr: "0",       // Hide VR button
+      ui_fullscreen: "0", // Hide fullscreen button
+      ui_annotations: "0", // Hide annotations
+      ui_theme: "dark"
+    });
+    
+    // Check if URL already has parameters
+    if (url.includes('?')) {
+      return `${url}&${params.toString()}`;
+    }
+    
+    return `${url}?${params.toString()}`;
   };
 
   return (
@@ -51,8 +107,9 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
               <div className="w-full aspect-video relative overflow-hidden rounded-lg">
                 {/* Enhanced 3D model viewer with better integration */}
                 <iframe
+                  ref={iframeRef}
                   title={`3D Model - ${project.title}`}
-                  src={`${project.modelUrl}?autostart=1&ui_controls=1&ui_infos=0&ui_theme=dark`}
+                  src={getSketchfabUrl(project.modelUrl)}
                   className="w-full h-full absolute inset-0 scale-105"
                   allow="autoplay; fullscreen; xr-spatial-tracking"
                   frameBorder="0"
